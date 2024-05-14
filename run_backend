@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+sudo service mysql start
+python3 -m api.v1.app

@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+
+export function setCookie(name, value, days) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    const cookieValue = encodeURIComponent(value); // Escape value
+    let cookieString = `${name}=${cookieValue};expires=${expires.toUTCString()};path=/`;
+
+    // Secure flag for HTTPS
+    if (window.location.protocol === 'https:') {
+        cookieString += ';Secure';
+    }
+
+    // HttpOnly flag
+    cookieString += ';HttpOnly';
+
+    // SameSite attribute
+    cookieString += ';SameSite=Strict'; // or 'Lax' depending on your requirements
+
+    document.cookie = cookieString;
+}
+
+
+
+export function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return null;
+}
+
+export function clearCookie(name) {
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+}

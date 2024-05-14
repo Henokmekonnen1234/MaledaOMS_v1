@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "build": "babel web_flask/static/js -d web_flask/static/js"
+  },
+  "dependencies": {
+    "bootstrap-select": "^1.13.18"
+  }
+}

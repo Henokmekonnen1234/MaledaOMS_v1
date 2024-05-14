@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block head %}
+    {% include 'head.html' %}
+{% endblock %}
+
+<body>
+    {% block header%}
+     {% include 'header.html' %}
+    {% endblock%}
+    
+    {% block sidemenu %}
+        {% include 'side_menu.html' %}
+    {% endblock %}
+
+    {% block content%}
+    {% endblock%}
+
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock %}
+
+    {% block script %}
+    {% endblock %}
+
+    <script type="module" src="../static/js/profile.js?{{ cache_id }}"></script>
+</body>
+
+</html>

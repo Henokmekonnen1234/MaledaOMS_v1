@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Create Product
+{% endblock %}
+
+{% block head %}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Product</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Home</a></li>
+          <li class="breadcrumb-item">create</li>
+          <li class="breadcrumb-item active">product</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Create product</h5>
+
+              <form class="row g-3">
+                
+                <div class="col-md-6">
+                    <label for="inputState" class="form-label">Product name</label>
+                    <br/>
+                    <select id="mySelect" class="selectpicker" data-live-search="true">
+                        <option data-tokens="Option 1">Option 1 - Lorem ipsum dolor sit amet</option>
+                        <option data-tokens="Option 2">Option 2 - Consectetur adipiscing elit</option>
+                        <option data-tokens="Option 3">Option 3 - Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</option>
+                        <option data-tokens="Option 4">Option 4 - Ut enim ad minim veniam</option>
+                        <option data-tokens="Option 5">Option 5 - Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</option>
+                      </select>
+                  </div>
+                <div class="col-md-6">
+                  <label for="inputPassword5" class="form-label">quantity</label>
+                  <input type="number" class="form-control" id="inputPassword5">
+                </div>
+                <div class="col-md-4">
+                    <label for="inputState" class="form-label">Catagoriy</label>
+                    <select id="mySelect2" class="selectpicker2" data-live-search="true">
+                        <option data-tokens="Option 1">Option 1 - Lorem ipsum dolor sit amet</option>
+                        <option data-tokens="Option 2">Option 2 - Consectetur adipiscing elit</option>
+                        <option data-tokens="Option 3">Option 3 - Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</option>
+                        <option data-tokens="Option 4">Option 4 - Ut enim ad minim veniam</option>
+                        <option data-tokens="Option 5">Option 5 - Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</option>
+                      </select>
+                  </div>
+                
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Create Product</button>
+                </div>
+              </form><!-- End Multi Columns Form -->
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function() {
+      $('.selectpicker').selectpicker();
+      $('.selectpicker2').selectpicker();
+    });
+    </script>
+{% endblock %}
