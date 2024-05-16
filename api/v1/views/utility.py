@@ -5,7 +5,7 @@ import os
 
 not_found = {"error": "not_found"}
 
-UPLOAD_FOLDER = "/home/drogo/exercise/MaledaOMS/web_flask/static/img/upload"
+UPLOAD_FOLDER = "/home/drogo/MaledaOMS_v1/web_flask/static/img/upload"
 
 def get_unique_filename(filename):
     """This method will generate a new name for the file"""
@@ -24,7 +24,7 @@ def save_file(file):
         return None
 
 def delete_file(file):
-    """This methos will delete the file"""
+    """This method will delete the file"""
     file_path = os.path.join(UPLOAD_FOLDER, file)
     if os.path.exists(file_path):
         os.remove(file_path)

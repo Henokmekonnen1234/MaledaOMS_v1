@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-$(document).ready(function() {
+$(function() {
 
-    
+    $(".reg-customer").on("submit", function(event) {
+
+    })
 })
 

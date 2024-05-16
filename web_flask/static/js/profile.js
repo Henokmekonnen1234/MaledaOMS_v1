@@ -2,7 +2,7 @@
 
 import { ajax_request } from "./requests.js";
 import { apiUrl, webUrl } from "./constants.js";
-import { getLS } from "./cookies.js";
+import { getLS, deleteLS } from "./cookies.js";
 
 $(document).ready(function(){
     ajax_request(apiUrl + "company", "GET", getLS("company"),
@@ -13,11 +13,6 @@ $(document).ready(function(){
     $(".address").text(response.address)
     $(".phone_no").text(response.phone_no)
     $(".email").text(response.email)
-    $("#name").val(response.name)
-    $("#description").val(response.description)
-    $("#address").val(response.address)
-    $("#email").val(response.email);
-    $("#phone_no").val(response.phone_no);
     if (response.image){
         $(".image").attr("src", "../static/img/upload/" + response.image)
     }
@@ -41,6 +36,13 @@ $(document).ready(function(){
     // Set the link directly in the header
     document.getElementById('login').innerHTML = '';
     document.getElementById('login').appendChild(loginLink);
+    window.location.href = webUrl + "login"
     console.log(error)
 })
+
+    $("#login").on("click", function(event) {
+        event.preventDefault()
+        deleteLS("company")
+        window.location.href = webUrl + "login"
+    })
 })
