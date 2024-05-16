@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-export function ajax_request(url, method, token=null, contenttp, data) {
+export function ajax_request(url, method, token=null, contenttp=null, data=null) {
   return new Promise(function (resolve, reject) {
     $.ajax({
       url: url,

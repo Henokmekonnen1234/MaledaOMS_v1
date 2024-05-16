@@ -4,6 +4,8 @@ from uuid import uuid4
 import os
 
 not_found = {"error": "not_found"}
+error_data = {"error": "data not found"}
+internal_error = {"error": "Internal Error"}
 
 UPLOAD_FOLDER = "/home/drogo/MaledaOMS_v1/web_flask/static/img/upload"
 

@@ -14,7 +14,6 @@ load_dotenv()
 app = Flask(__name__)
 app.config["SECRET_KEY"] = str(uuid4())
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-#http://127.0.0.1:5000
 
 
 @app.route("/")
@@ -53,6 +52,12 @@ def login():
 def profile():
     """This will fetch the profile page"""
     return render_template("profile.html", cache_id= uuid4())
+
+
+@app.route("/list/customer")
+def customer_list():
+    """This will fetch the profile page"""
+    return render_template("customer_list.html", cache_id= uuid4())
 
 
 if __name__ == "__main__":
