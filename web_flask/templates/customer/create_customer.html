@@ -32,8 +32,8 @@
                   <input type="text" name="full_name" class="form-control" id="full_name">
                 </div>
                 <div class="col-12">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="email" name="email" class="form-control" id="email" placeholder="1234 Main St">
+                  <label for="telegram" class="form-label">Telegram</label>
+                  <input type="text" name="telegram" class="form-control" id="telegram" placeholder="@username">
                 </div>
                 <div class="col-12">
                   <label for="address" class="form-label">Address</label>
@@ -106,8 +106,8 @@
                   <input type="text" class="form-control" id="ex_full_name" placeholder="Jhon doe" disabled>
                 </div>
                 <div class="col-12">
-                  <label for="ex_email" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="ex_email" placeholder="Jhondoe@someemail.com" disabled>
+                  <label for="ex_email" class="form-label">Telegram</label>
+                  <input type="link" class="form-control" id="ex_email" placeholder="Jhondoe@someemail.com" disabled>
                 </div>
                 <div class="col-12">
                     <label for="ex_address" class="form-label">Address</label>
@@ -140,5 +140,5 @@
   </main><!-- End #main -->
 {% endblock %}
 {% block script %}
-<script type="module" src="../static/js/customer.js?{{ cache_id }}"></script>
+<script type="module" src="../static/js/customer/customer.js?{{ cache_id }}"></script>
 {% endblock %}

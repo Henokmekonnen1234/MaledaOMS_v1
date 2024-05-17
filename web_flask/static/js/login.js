@@ -2,7 +2,7 @@
 
 import { ajax_request } from "./requests.js";
 import { apiUrl, webUrl } from "./constants.js";
-import { saveLS } from "./cookies.js";
+import { saveLS,deleteLS } from "./cookies.js";
 
 $(document).ready(() => {
     $('#login-form').submit((event) => {
@@ -18,6 +18,7 @@ $(document).ready(() => {
         console.log(url)
         ajax_request(url, "POST", null, 'application/json',  JSON.stringify(data))
         .then(response => {
+            deleteLS("company")
             saveLS("company", response.token)
             window.location.assign(webUrl)
         })

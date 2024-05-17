@@ -44,3 +44,47 @@ def get_customer():
     except Exception as e:
         print(e)
         return jsonify(internal_error), 404
+
+
+@app_views.route("/customer/<id>", methods=["GET"], strict_slashes=False)
+@jwt_required()
+def get_customer_id(id: str):
+    try:
+        comp_id = get_jwt_identity()
+        if not comp_id:
+            return jsonify(not_found), 401
+        if not id:
+            return jsonify(not_found), 401
+        customer = storage.get(Customer, id)
+        if not customer:
+            return jsonify(not_found), 401
+        else:   
+            return jsonify({"customer": customer.to_dict()})
+
+    except Exception as e:
+        print(e)
+        return jsonify(internal_error), 404
+
+@app_views.route("/customer/<id>", methods=["PUT"], strict_slashes=False)
+@jwt_required()
+def update_customer(id: str):
+    try:
+        comp_id = get_jwt_identity()
+        if not comp_id:
+            return jsonify(not_found), 401
+        if not id:
+            return jsonify(not_found), 404
+        update_value = request.form.to_dict()
+        if not update_value:
+            return jsonify(not_found), 404
+        customer = storage.get(Customer, id)
+        if not customer:
+            return jsonify(not_found), 401
+        else:
+            for key, value in update_value.items():
+                setattr(customer, key, value)
+            customer.save()
+            return jsonify({"customer": customer.to_dict()})
+    except Exception as e:
+        print(e)
+        return jsonify(not_found), 404

@@ -19,12 +19,12 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 @app.route("/")
 def dashboard():
     """This method will fetch dashboard page"""
-    return render_template("dashboard.html", cache_id= uuid4())
+    return render_template("./company/dashboard.html", cache_id= uuid4())
 
 @app.route("/register/customer")
 def create_customer():
     """This method will fetch html page for customer creation"""
-    return render_template("create_customer.html", cache_id= uuid4())
+    return render_template("./customer/create_customer.html", cache_id= uuid4())
 
 @app.route("/create/order")
 def create_order():
@@ -39,7 +39,7 @@ def create_product():
 @app.route("/register/company")
 def create_company():
     """This will fetch the company_register page"""
-    return render_template("company_register.html", cache_id= uuid4())
+    return render_template("./company/company_register.html", cache_id= uuid4())
 
 
 @app.route("/login")
@@ -51,13 +51,19 @@ def login():
 @app.route("/profile")
 def profile():
     """This will fetch the profile page"""
-    return render_template("profile.html", cache_id= uuid4())
+    return render_template("./company/profile.html", cache_id= uuid4())
 
 
 @app.route("/list/customer")
 def customer_list():
     """This will fetch the profile page"""
-    return render_template("customer_list.html", cache_id= uuid4())
+    return render_template("./customer/customer_list.html", cache_id= uuid4())
+
+
+@app.route("/profile/customer")
+def customer_update():
+    """This will fetch the profile page"""
+    return render_template("./customer/customer_profile.html", cache_id= uuid4())
 
 
 if __name__ == "__main__":

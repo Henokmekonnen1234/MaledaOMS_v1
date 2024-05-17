@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import { ajax_request } from "./requests.js";
-import { apiUrl, webUrl } from "./constants.js";
+import { ajax_request } from "../requests.js";
+import { apiUrl, webUrl } from "../constants.js";
 
 $(document).ready(() => {
-    $(".company-reg").submit(function(event) {
+    $(".company-reg").on('submit',function(event) {
         event.preventDefault();
 
         const name = $("#name").val()
