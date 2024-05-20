@@ -88,3 +88,23 @@ def update_customer(id: str):
     except Exception as e:
         print(e)
         return jsonify(not_found), 404
+
+
+@app_views.route("/customer/<id>", methods=["DELETE"], strict_slashes=False)
+@jwt_required()
+def delete_customer(id: str):
+    try:
+        comp_id = get_jwt_identity()
+        if not comp_id:
+            return jsonify(not_found), 401
+        if not id:
+            return jsonify(not_found), 404
+        customer = storage.get(Customer, id)
+        if not customer:
+            return jsonify(not_found), 401
+        else:
+            storage.delete(customer)
+            storage.save()
+            return jsonify({"success": "Customer deleted"})
+    except Exception as e:
+        return jsonify(not_found), 505

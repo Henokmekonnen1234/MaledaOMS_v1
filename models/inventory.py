@@ -17,6 +17,7 @@ class Inventory(BaseModel, Base):
         quantity (int): The quantity of the product in inventory.
     """
     __tablename__ = "inventory"
+    image = Column(String(100), nullable=True)
     product = Column(String(50), nullable=False)
     catagory = Column(String(100), nullable=True)
     quantity = Column(Integer, nullable=False)
