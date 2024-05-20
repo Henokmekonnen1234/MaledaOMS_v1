@@ -8,8 +8,7 @@ from models import storage
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
-@app_views.route("/inventory", methods=["POST"], strict_slashes=False)
-@jwt_required()
-def add_product():
-    try:
-        
+# @app_views.route("/inventory", methods=["POST"], strict_slashes=False)
+# @jwt_required()
+# def add_product():
+#     try:

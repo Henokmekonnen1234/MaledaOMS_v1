@@ -8,7 +8,7 @@ error_data = {"error": "data not found"}
 internal_error = {"error": "Internal Error"}
 
 UPLOAD_FOLDER = "/home/drogo/MaledaOMS_v1/web_flask/static/img/upload"
-
+#/home/drogo/Documents/MaledaOMS_v1/web_flask/static/img/upload
 def get_unique_filename(filename):
     """This method will generate a new name for the file"""
     file_extension = os.path.splitext(filename)[1]

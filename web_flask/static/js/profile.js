@@ -13,6 +13,12 @@ $(document).ready(function(){
     $(".address").text(response.address)
     $(".phone_no").text(response.phone_no)
     $(".email").text(response.email)
+
+    $(".username").val(response.name)
+    $(".description").val(response.description)
+    $(".address").val(response.address)
+    $(".phone_no").val(response.phone_no)
+    $(".email").val(response.email)
     if (response.image){
         $(".image").attr("src", "../static/img/upload/" + response.image)
     }
