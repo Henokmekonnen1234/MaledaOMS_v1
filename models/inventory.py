@@ -21,7 +21,7 @@ class Inventory(BaseModel, Base):
     product = Column(String(50), nullable=False)
     catagory = Column(String(100), nullable=True)
     quantity = Column(Integer, nullable=False)
-    comp_id = Column(String(60), ForeignKey("company.id"),
+    company_id = Column(String(60), ForeignKey("company.id"),
                      nullable=False)
 
     def __init__(self, *args, **kwargs):

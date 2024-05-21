@@ -4,7 +4,7 @@ import { ajax_request } from "./requests.js";
 import { apiUrl, webUrl } from "./constants.js";
 import { getLS, deleteLS } from "./cookies.js";
 
-$(document).ready(function(){
+$(function(){
     ajax_request(apiUrl + "company", "GET", getLS("company"),
              "application/json",  JSON.stringify({}))
 .then(response => {

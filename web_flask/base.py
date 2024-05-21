@@ -34,7 +34,19 @@ def create_order():
 @app.route("/create/product")
 def create_product():
     """This method will fetch create_product html page"""
-    return render_template("create_product.html", cache_id= uuid4())
+    return render_template("./inventory/create_product.html", cache_id= uuid4())
+
+
+@app.route("/update/product")
+def update_product():
+    """This will fetch the profile page"""
+    return render_template("./inventory/update_product.html", cache_id= uuid4())
+
+
+@app.route("/list/product")
+def product_list():
+    """This will fetch the profile page"""
+    return render_template("./inventory/product_list.html", cache_id= uuid4())
 
 @app.route("/register/company")
 def create_company():

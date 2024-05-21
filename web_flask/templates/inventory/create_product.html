@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Create Product
+{% endblock %}
+
+{% block content %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Product</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Home</a></li>
+          <li class="breadcrumb-item">create</li>
+          <li class="breadcrumb-item active">product</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Create product</h5>
+
+              <form class="row g-3 create-prod">
+
+                <div class="col-md-10">
+                  <label for="inputPassword5" class="form-label">Image</label>
+                  <input type="file" class="form-control" id="image" name="image">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="inputPassword5" class="form-label">Product Name</label>
+                  <input type="text" class="form-control" id="product" name="product">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputPassword5" class="form-label">quantity</label>
+                  <input type="number" class="form-control" id="quantity" name="quantity">
+                </div>
+                <div class="col-md-10">
+                    <label for="inputState" class="form-label">Catagoriy</label>
+                    <select id="catagory" name="catagory" class="form-select" data-live-search="true">
+                      <option value="Electronics">Electronics</option>
+                      <option value="Books">Books</option>
+                      <option value="Clothing">Clothing</option>
+                      <option value="Home & Kitchen">Home & Kitchen</option>
+                      <option value="Beauty & Personal Care">Beauty & Personal Care</option>
+                      <option value="Sports & Outdoors">Sports & Outdoors</option>
+                      <option value="Automotive">Automotive</option>
+                      <option value="Toys & Games">Toys & Games</option>
+                      <option value="Office Supplies">Office Supplies</option>
+                      <option value="Health & Household">Health & Household</option>
+                      <option value="Pet Supplies">Pet Supplies</option>
+                      <option value="Tools & Home Improvement">Tools & Home Improvement</option>
+                      <option value="Baby Products">Baby Products</option>
+                      <option value="Movies & TV">Movies & TV</option>
+                      <option value="Grocery & Gourmet Food">Grocery & Gourmet Food</option>
+                      <option value="Arts, Crafts & Sewing">Arts, Crafts & Sewing</option>
+                      <option value="Industrial & Scientific">Industrial & Scientific</option>
+                      <option value="Luggage & Travel Gear">Luggage & Travel Gear</option>
+                      <option value="Musical Instruments">Musical Instruments</option>
+                      <option value="Software">Software</option>
+                      <option value="Video Games">Video Games</option>
+                      <option value="Jewelry">Jewelry</option>
+                      <option value="Watches">Watches</option>
+                      <option value="Garden & Outdoor">Garden & Outdoor</option>
+                      <option value="Cell Phones & Accessories">Cell Phones & Accessories</option>
+                      </select>
+                  </div>
+                
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Create Product</button>
+                </div>
+              </form><!-- End Multi Columns Form -->
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{% endblock %}
+
+{% block script %}
+<script type="module" src="../../static/js/inventory/inventory.js?{{ cache_id }}"></script>
+{% endblock %}
