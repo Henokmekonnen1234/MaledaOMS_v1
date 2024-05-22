@@ -29,7 +29,7 @@ def create_customer():
 @app.route("/create/order")
 def create_order():
     """This method will fetch create_order html page"""
-    return render_template("create_order.html", cache_id= uuid4())
+    return render_template("./order/create_order.html", cache_id= uuid4())
 
 @app.route("/create/product")
 def create_product():

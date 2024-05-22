@@ -60,7 +60,7 @@
   </main><!-- End #main -->
 {% endblock %}
 {% block script %}
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script type="module" src="../../static/js/jquery.dataTables.min.js?{{ cache_id }}"></script>
+<script type="module" src="../../static/js/dataTables.bootstrap4.min.js?{{ cache_id }}"></script>
   <script type="module" src="../static/js/customer/customer_list.js?{{ cache_id }}"></script>
 {% endblock %}

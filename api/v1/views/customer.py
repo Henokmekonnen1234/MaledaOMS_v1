@@ -13,6 +13,10 @@ from flask_jwt_extended  import create_access_token, get_jwt_identity, jwt_requi
 def reg_customer():
     try:
         comp_id = get_jwt_identity()
+        if not comp_id:
+            return jsonify(not_found), 404
+        if not id:
+            return jsonify(not_found), 404
         cust_data = request.form.to_dict()
         print(cust_data)
         if not comp_id:
@@ -36,7 +40,8 @@ def get_customer():
         if not comp_id:
             return jsonify(not_found), 401
         customer = [
-            value.to_dict() for _, value in storage.all(Customer).items()
+            value.to_dict() for _, value in storage.all(Customer).items()\
+            if value.company_id == comp_id
             ]
         
         return jsonify({"customer": customer})
@@ -56,10 +61,10 @@ def get_customer_id(id: str):
         if not id:
             return jsonify(not_found), 401
         customer = storage.get(Customer, id)
-        if not customer:
-            return jsonify(not_found), 401
-        else:   
+        if customer and customer.company_id == comp_id:
             return jsonify({"customer": customer.to_dict()})
+        else:   
+            return jsonify(not_found), 401
 
     except Exception as e:
         print(e)
@@ -78,13 +83,13 @@ def update_customer(id: str):
         if not update_value:
             return jsonify(not_found), 404
         customer = storage.get(Customer, id)
-        if not customer:
-            return jsonify(not_found), 401
-        else:
+        if customer and customer.company_id == comp_id:
             for key, value in update_value.items():
                 setattr(customer, key, value)
             customer.save()
             return jsonify({"customer": customer.to_dict()})
+        else:
+            return jsonify(not_found), 401
     except Exception as e:
         print(e)
         return jsonify(not_found), 404

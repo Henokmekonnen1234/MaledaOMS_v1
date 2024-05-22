@@ -35,6 +35,7 @@
                         <th scope="col">Image</th>
                         <th scope="col">Product name</th>
                         <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
                         <th scope="col">Category</th>
                         <th scope="col">Update</th>
                       </tr>
@@ -46,6 +47,7 @@
                         </td>
                         <td>Somebarand creame</td>
                         <td>34</td>
+                        <td>21.00 BR</td>
                         <td>Beauty & Personal Care</td>
                         <td><a href="#" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i></a></td>
                       </tr>
@@ -65,5 +67,5 @@
 {% block script %}
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-  
+<script type="module" src="../../static/js/inventory/inventory_list.js?{{ cache_id }}"></script>
 {% endblock %}

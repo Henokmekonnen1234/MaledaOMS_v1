@@ -25,6 +25,9 @@ $(function(){
     console.log(response)
 })
 .catch(error => {
+    deleteLS("product")
+    deleteLS("company")
+    deleteLS("customer")
     const mainElement = document.querySelector('main');
 
     const newDivElement = document.createElement('div');

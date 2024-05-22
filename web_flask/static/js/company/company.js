@@ -18,7 +18,7 @@ $(function() {
         ajax_request(apiUrl + "company", "PUT", getLS("company"), false,
         formData)
         .then(response => {
-            window.location.assign(webUrl + "/")
+            window.location.assign(webUrl + "profile")
         })
         .catch(error => {
             console.log(error)

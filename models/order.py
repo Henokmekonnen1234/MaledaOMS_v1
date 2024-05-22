@@ -3,7 +3,7 @@
 This module will connect Order class to database
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from models.base_model import BaseModel, Base
 from models.delivery import Delivery
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime
@@ -24,10 +24,10 @@ class Order(BaseModel, Base):
     txn_no = Column(String(100), nullable=False)
     cus_id = Column(String(60), ForeignKey("customer.id"),
                     nullable=False)
-    OrderDate = Column(DateTime, default=datetime.utcnow(),
+    OrderDate = Column(DateTime, default=datetime.now(timezone.utc),
                        nullable=False)
     Total_amnt = Column(Float, default=0.0, nullable=False)
-    status = Column(String(100), nullable=False)
+    status = Column(String(100), default="Processing", nullable=False)
     delivery = relationship("Delivery", backref="order",
                             cascade="all, delete, delete-orphan")
 

@@ -10,8 +10,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Home</a></li>
-          <li class="breadcrumb-item">Company</li>
-          <li class="breadcrumb-item active">Profile</li>
+          <li class="breadcrumb-item">Inventory</li>
+          <li class="breadcrumb-item active">Details</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -23,8 +23,8 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="assets/img/profile-img.jpg"  alt="Profile" class="rounded-circle image image">
-              <h2 class="username"></h2>
+              <img src="../../static/img/cream.jpg"  alt="Profile" class="rounded-circle image_updt">
+              <h2 class="product"></h2>
             </div>
           </div>
 
@@ -49,36 +49,29 @@
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic description"></p>
+                  <h5 class="card-title">Product Name</h5>
+                  <p class="small fst-italic product"></p>
 
-                  <h5 class="card-title">Profile Details</h5>
+                  <h5 class="card-title">Product Details</h5>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Company</div>
+                    <div class="col-lg-3 col-md-4 label">quantity</div>
                     <div class="col-lg-9 col-md-8" >
-                        <span class="username"></span>
+                        <span class="quantity"></span>
                 </div>
-                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">price</div>
+                <div class="col-lg-9 col-md-8" >
+                    <span class="price"></span>
+            </div>
+              </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
+                    <div class="col-lg-3 col-md-4 label">Category</div>
                     <div class="col-lg-9 col-md-8">
-                        <span class="address"></span>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">
-                        <span class="phone_no"></span>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">
-                        <span class="email"></span>
+                        <span class="catagory"></span>
                     </div>
                   </div>
 
@@ -87,11 +80,11 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form class="update-company">
+                  <form class="create-prod" id="update">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img class="image" src="../static/img/profile-img.jpg" alt="Profile">
+                        <img class="image_updt" src="../../static/img/cream.jpg" alt="Profile">
                         <div class="pt-2">
                             <input name="image" type="file" class="form-control" id="image" >
                         </div>
@@ -99,37 +92,56 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="name" class="col-md-4 col-lg-3 col-form-label">Name</label>
+                      <label for="name" class="col-md-4 col-lg-3 col-form-label">Product Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="name" type="text" class="form-control username" id="name" >
+                        <input name="product" type="text" class="form-control product_updt" id="product" >
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="description" class="col-md-4 col-lg-3 col-form-label">About</label>
+                      <label for="description" class="col-md-4 col-lg-3 col-form-label">Quantity</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="description" class="form-control description id="description" style="height: 100px"></textarea>
+                        <input name="quantity" type="number" class="form-control quantity_updt" id="quantity" >
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                      <label for="description" class="col-md-4 col-lg-3 col-form-label">Price</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control address" id="address" value="A108 Adam Street, New York, NY 535022">
+                        <input name="price" type="float" class="form-control" id="price" >
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="phone_no" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                      <label for="description" class="col-md-4 col-lg-3 col-form-label">Catagoriy</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone_no" type="text" class="form-control phone_no" id="phone_no" >
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control email" id="email" >
+                        <select id="catagory" name="catagory" class="form-select catagory_updt" data-live-search="true">
+                          <option value="Electronics">Electronics</option>
+                          <option value="Books">Books</option>
+                          <option value="Clothing">Clothing</option>
+                          <option value="Home & Kitchen">Home & Kitchen</option>
+                          <option value="Beauty & Personal Care">Beauty & Personal Care</option>
+                          <option value="Sports & Outdoors">Sports & Outdoors</option>
+                          <option value="Automotive">Automotive</option>
+                          <option value="Toys & Games">Toys & Games</option>
+                          <option value="Office Supplies">Office Supplies</option>
+                          <option value="Health & Household">Health & Household</option>
+                          <option value="Pet Supplies">Pet Supplies</option>
+                          <option value="Tools & Home Improvement">Tools & Home Improvement</option>
+                          <option value="Baby Products">Baby Products</option>
+                          <option value="Movies & TV">Movies & TV</option>
+                          <option value="Grocery & Gourmet Food">Grocery & Gourmet Food</option>
+                          <option value="Arts, Crafts & Sewing">Arts, Crafts & Sewing</option>
+                          <option value="Industrial & Scientific">Industrial & Scientific</option>
+                          <option value="Luggage & Travel Gear">Luggage & Travel Gear</option>
+                          <option value="Musical Instruments">Musical Instruments</option>
+                          <option value="Software">Software</option>
+                          <option value="Video Games">Video Games</option>
+                          <option value="Jewelry">Jewelry</option>
+                          <option value="Watches">Watches</option>
+                          <option value="Garden & Outdoor">Garden & Outdoor</option>
+                          <option value="Cell Phones & Accessories">Cell Phones & Accessories</option>
+                          </select>
                       </div>
                     </div>
 
@@ -152,5 +164,5 @@
   </main><!-- End #main -->
  {% endblock %}
  {% block script %}
-  <script type="module" src="../static/js/company/company.js?{{ cache_id }}"></script>
+  <script type="module" src="../../static/js/inventory/inventory.js?{{ cache_id }}"></script>
 {% endblock %}

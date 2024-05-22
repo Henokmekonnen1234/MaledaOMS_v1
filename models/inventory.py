@@ -4,7 +4,7 @@ This module will connect Inventory class with database
 """
 
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey, Float
 
 
 class Inventory(BaseModel, Base):
@@ -21,6 +21,7 @@ class Inventory(BaseModel, Base):
     product = Column(String(50), nullable=False)
     catagory = Column(String(100), nullable=True)
     quantity = Column(Integer, nullable=False)
+    price = Column(Float, default=0.0, nullable=False)
     company_id = Column(String(60), ForeignKey("company.id"),
                      nullable=False)
 

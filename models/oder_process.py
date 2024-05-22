@@ -3,7 +3,7 @@
 This module will connect OrderProcess class with database
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, DateTime, ForeignKey
 
@@ -19,9 +19,9 @@ class OrderProcess(BaseModel, Base):
     """
     __tablename__ = "order_process"
     order_id = Column(String(60), ForeignKey("order.id"), nullable=False)
-    process_date = Column(DateTime, default=datetime.utcnow(),
+    process_date = Column(DateTime, default=datetime.now(timezone.utc),
                           nullable=True)
-    process_status = Column(String(60), nullable=True)
+    process_status = Column(String(60),default="25% Paid", nullable=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

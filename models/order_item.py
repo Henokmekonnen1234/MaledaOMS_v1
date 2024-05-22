@@ -24,7 +24,6 @@ class OrderItem(BaseModel, Base):
     prod_id = Column(String(60), ForeignKey("inventory.id"),
                      nullable=False)
     quantity = Column(Integer, nullable=True)
-    price = Column(Float, nullable=True)
-
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
