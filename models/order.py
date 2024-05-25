@@ -24,9 +24,9 @@ class Order(BaseModel, Base):
     txn_no = Column(String(100), nullable=False)
     cus_id = Column(String(60), ForeignKey("customer.id"),
                     nullable=False)
-    OrderDate = Column(DateTime, default=datetime.now(timezone.utc),
+    order_date = Column(DateTime, default=datetime.now(timezone.utc),
                        nullable=False)
-    Total_amnt = Column(Float, default=0.0, nullable=False)
+    total_amnt = Column(Float, default=0.0, nullable=False)
     status = Column(String(100), default="Processing", nullable=False)
     delivery = relationship("Delivery", backref="order",
                             cascade="all, delete, delete-orphan")

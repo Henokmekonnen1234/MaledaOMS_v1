@@ -44,7 +44,7 @@ def get_customer():
             if value.company_id == comp_id
             ]
         
-        return jsonify({"customer": customer})
+        return jsonify(customer)
 
     except Exception as e:
         print(e)

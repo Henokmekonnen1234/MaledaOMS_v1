@@ -81,10 +81,10 @@ def update_product(id: str):
         inventory = storage.get(Inventory, id)
         invent_data = request.form.to_dict()
         if 'image' in request.files and request.files['image']:
-                invent_data['image'] = save_file(request.files['image'])
                 image_file = os.path.basename(inventory.image)
                 if image_file:
                     delete_file(image_file)
+                invent_data['image'] = save_file(request.files['image'])
         for key, value in invent_data.items():
             if key == "__class__" or key == "id" or  key ==\
                     "created_date" or key == "updated_date":

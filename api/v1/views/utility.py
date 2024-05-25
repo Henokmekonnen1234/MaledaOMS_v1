@@ -3,13 +3,16 @@
 from uuid import uuid4
 import bcrypt
 import os
+import random
+import string
+
 
 not_found = {"error": "not_found"}
 error_data = {"error": "data not found"}
 internal_error = {"error": "Internal Error"}
 
 UPLOAD_FOLDER = "/home/drogo/MaledaOMS_v1/web_flask/static/img/upload"
-#/home/drogo/Documents/MaledaOMS_v1/web_flask/static/img/upload
+
 def get_unique_filename(filename):
     """This method will generate a new name for the file"""
     file_extension = os.path.splitext(filename)[1]
@@ -77,3 +80,11 @@ def taken_value(cls, **kwargs):
         return False
     else:
         return f"No value passed"
+    
+def generate_transaction_number(length=12):
+    """Generate a transaction number with random letters and digits."""
+    # Define the pool of characters (letters and digits)
+    characters = string.ascii_letters + string.digits
+    # Generate a random string of specified length from the pool of characters
+    transaction_number = ''.join(random.choice(characters) for _ in range(length))
+    return transaction_number

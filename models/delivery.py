@@ -14,7 +14,7 @@ class Delivery(BaseModel, Base):
     order_id = Column(String(60), ForeignKey("order.id"), nullable=False)
     delivery_date = Column(DateTime, default=datetime.utcnow(),
                            nullable=True)
-    delivery_status = Column(String(60), nullable=True)
+    delivery_status = Column(String(60), default="Pending", nullable=True)
     location = Column(String(60), nullable=True)
 
     def __init__(self, *args, **kwargs):

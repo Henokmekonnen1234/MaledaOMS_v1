@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ajax_request(apiUrl + "customer", "GET", getLS("company"),
                       "application/json")
         .then(response => {
-            const customer = response.customer
+            const customer = response
             var tbody = $("#customer-list") 
             tbody.empty()
             customer.forEach(value => {
