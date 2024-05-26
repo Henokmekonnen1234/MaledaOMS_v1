@@ -95,7 +95,7 @@ $(function() {
         .then(response => {
             deleteLS("order")
             saveLS("order", response.id)
-            console.log(response)
+            window.location.assign(webUrl + "order")
         })
         .catch(error => console.log(error))
        

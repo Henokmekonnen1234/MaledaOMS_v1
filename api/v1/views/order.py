@@ -18,6 +18,9 @@ import json
 @jwt_required()
 def get_order():
     try:
+        comp_id = get_jwt_identity()
+        if not comp_id:
+            return jsonify(not_found), 401
         order_data = request.form.to_dict()
         prod_value = json.loads(order_data["prod_value"])
         order_data["txn_no"] = generate_transaction_number()
@@ -50,4 +53,34 @@ def get_order():
         delivery.save()
         return jsonify(order.to_dict())
     except Exception as e:
-        return jsonify(e)
+        return jsonify(error_data), 505
+
+
+@app_views.route("/order/<id>", methods=["GET"], strict_slashes=False)
+@jwt_required()
+def get_order_id(id: str = ""):
+    try:
+        comp_id = get_jwt_identity()
+        if not comp_id:
+            return jsonify(not_found), 401
+        if not id:
+            return jsonify(not_found), 404
+        order = storage.get(Order, id)
+        if not order:
+            return jsonify(not_found), 404
+        order_proces = storage.filter(OrderProcess, "order_id", order.id)
+        order_prod = []
+        for value in storage.all(OrderItem).values():
+            if order.id == value.order_id:
+                order_prod.append(value.to_dict())
+        delivery = storage.filter(Delivery, "order_id", order.id)
+        return jsonify(
+            {
+                "order": order.to_dict(),
+                "order_prod": order_prod,
+                "order_proces": order_proces.to_dict(),
+                "delivery": delivery.to_dict()
+            }
+        )
+    except Exception as e:
+        return jsonify(error_data), 505
