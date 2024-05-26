@@ -44,6 +44,8 @@ def get_order():
         order_pro = OrderProcess(**order_p)
         delivery_add = {"order_id": order.id}
         delivery = Delivery(**delivery_add)
+        order_pro.save()
+        delivery.save()
         return jsonify([order.to_dict(), order_i.to_dict(), order_pro.to_dict(), delivery.to_dict()])
     except Exception as e:
         return jsonify(e)

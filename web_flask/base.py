@@ -31,6 +31,13 @@ def create_order():
     """This method will fetch create_order html page"""
     return render_template("./order/create_order.html", cache_id= uuid4())
 
+
+@app.route("/order")
+def order_page():
+    """This method will fetch create_order html page"""
+    return render_template("./order/order_page.html", cache_id= uuid4())
+
+
 @app.route("/create/product")
 def create_product():
     """This method will fetch create_product html page"""
