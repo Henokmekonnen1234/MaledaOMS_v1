@@ -1,0 +1,5 @@
+#!/bin/sh
+# Push changes to the remote repository
+git add .
+git commit -m "updates"
+git push origin main
