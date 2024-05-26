@@ -1,11 +1,8 @@
 {% extends "base.html" %}
 {% block title %}
-    Product list
+    Order list
 {% endblock %}
 
-{% block head %}
-<link rel="stylesheet" href="../../static/css/image.css?{{ cache_id }}"/> 
-{% endblock %}
 
 {% block content %}
 <main id="main" class="main">
@@ -15,7 +12,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Home</a></li>
-          <li class="breadcrumb-item">Product</li>
+          <li class="breadcrumb-item">Order</li>
           <li class="breadcrumb-item active">Lists</li>
         </ol>
       </nav>
@@ -32,23 +29,21 @@
                   <table id="example" class="table table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">Image</th>
+                        <th scope="col">TXN number</th>
+                        <th scope="col">Customer name</th>
                         <th scope="col">Product name</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Category</th>
+                        <th scope="col">Order Status</th>
+                        <th scope="col">Order process</th>
                         <th scope="col">Update</th>
                       </tr>
                     </thead>
                     <tbody id="customer-list">
                       <tr>
-                        <td>
-                          <img src="../../static/img/cream.jpg" alt="Profile 1" class="table-img">
-                        </td>
-                        <td>Somebarand creame</td>
-                        <td>34</td>
-                        <td>21.00 BR</td>
-                        <td>Beauty & Personal Care</td>
+                        <td>5rYKpOHdPwMN</td>
+                        <td>Brandon Jacob</td>
+                        <td>Nuttela</td>
+                        <td>Processing</td>
+                        <td>25% paid</td>
                         <td><a href="#" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i></a></td>
                       </tr>
                     </tbody>
@@ -65,7 +60,7 @@
   </main><!-- End #main -->
 {% endblock %}
 {% block script %}
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-<script type="module" src="../../static/js/inventory/inventory_list.js?{{ cache_id }}"></script>
+<script type="module" src="../../static/js/jquery.dataTables.min.js?{{ cache_id }}"></script>
+<script type="module" src="../../static/js/dataTables.bootstrap4.min.js?{{ cache_id }}"></script>
+  <script type="module" src="../static/js/customer/customer_list.js?{{ cache_id }}"></script>
 {% endblock %}
