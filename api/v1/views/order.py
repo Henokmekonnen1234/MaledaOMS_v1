@@ -84,3 +84,19 @@ def get_order_id(id: str = ""):
         )
     except Exception as e:
         return jsonify(error_data), 505
+
+
+@app_views.route("/order", methods=["GET"], slashes_strict=False)
+@jwt_required()
+def get_order():
+    try:
+        comp_id = get_jwt_identity()
+        if not comp_id:
+            return jsonify(not_found), 401
+        order = [ value.to_dict() for value in storage.all(Order).values()]
+        if order:
+            return jsonify(order)
+        else:
+            return jsonify(not_found), 404
+    except Exception as e:
+        return jsonify(error_data), 505
