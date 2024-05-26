@@ -1,5 +1,9 @@
-#!/bin/sh
-# Push changes to the remote repository
-git add .
-git commit -m "updates"
-git push origin main
+#!/usr/bin/env bash
+
+# Check for changes and commit them
+if ! git diff-index --quiet HEAD --; then
+  git add .
+  git commit -m "updates"
+  git push origin main
+fi
+
