@@ -9,17 +9,17 @@ $(function() {
     ajax_request(apiUrl + `customer/${getLS('customer')}`,  "GET",
                  getLS("company"))
     .then( response => {
-        $(".full_name").text(response.customer.full_name)
-        $(".telegram").text(response.customer.telegram)
-        $(".address_cust").text(response.customer.address)
-        $(".phone_no_cust").text(response.customer.phone_no)
-        $(".city").text(response.customer.city)
+        $(".full_name").text(response.full_name)
+        $(".telegram").text(response.telegram)
+        $(".address_cust").text(response.address)
+        $(".phone_no_cust").text(response.phone_no)
+        $(".city").text(response.city)
 
-        $(".full_name").val(response.customer.full_name)
-        $(".telegram").val(response.customer.telegram)
-        $(".address_cust").val(response.customer.address)
-        $(".phone_no_cust").val(response.customer.phone_no)
-        $("#city").val(response.customer.city)        
+        $(".full_name").val(response.full_name)
+        $(".telegram").val(response.telegram)
+        $(".address_cust").val(response.address)
+        $(".phone_no_cust").val(response.phone_no)
+        $("#city").val(response.city)        
     })
     .catch(error => console.log(error))
 
@@ -39,7 +39,7 @@ $(function() {
                       formData)
         .then(response => {
             deleteLS("customer")
-            saveLS("customer", response.customer.id)
+            saveLS("customer", response.id)
             window.location.href = webUrl + "profile/customer"
         })
         .catch(error => {

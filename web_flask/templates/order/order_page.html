@@ -98,7 +98,7 @@
         <div class="col-lg-6 products">
 
           <!-- Card with an image on left -->
-          <div class="card mb-3 product-template">
+          <div class="card mb-3 product-template d-none">
             <div class="row g-0">
               <div class="col-md-3">
                 <img src="../../static/img/cream.jpg" class="img-fluid rounded-start image" alt="...">
@@ -153,4 +153,7 @@
     </section>
 
   </main>
+{% endblock %}
+{% block script %}
+<script type="module" src="../../static/js/order/order_detail.js?{{ cache_id }}"></script>
 {% endblock %}

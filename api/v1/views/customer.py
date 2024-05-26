@@ -26,7 +26,7 @@ def reg_customer():
         cust_data["company_id"] = comp_id
         customer = Customer(**cust_data)
         customer.save()
-        return jsonify({"customer": customer.to_dict()})
+        return jsonify(customer.to_dict())
     except Exception as e:
         print(e)
         return jsonify(internal_error), 404
@@ -62,7 +62,7 @@ def get_customer_id(id: str):
             return jsonify(not_found), 401
         customer = storage.get(Customer, id)
         if customer and customer.company_id == comp_id:
-            return jsonify({"customer": customer.to_dict()})
+            return jsonify(customer.to_dict())
         else:   
             return jsonify(not_found), 401
 
@@ -87,7 +87,7 @@ def update_customer(id: str):
             for key, value in update_value.items():
                 setattr(customer, key, value)
             customer.save()
-            return jsonify({"customer": customer.to_dict()})
+            return jsonify(customer.to_dict())
         else:
             return jsonify(not_found), 401
     except Exception as e:
