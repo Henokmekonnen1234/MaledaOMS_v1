@@ -33,6 +33,7 @@ def get_order():
             inventory.save()
         order = Order(**order_data)
         order.save()
+        order_prod = []
         for key, value in prod_value.items():
             order_item = {}
             order_item["order_id"] = order.id
@@ -40,12 +41,13 @@ def get_order():
             order_item["quantity"] = value
             order_i = OrderItem(**order_item)
             order_i.save()
+            order_prod.append(order_i.to_dict())
         order_p = {"order_id": order.id}
         order_pro = OrderProcess(**order_p)
         delivery_add = {"order_id": order.id}
         delivery = Delivery(**delivery_add)
         order_pro.save()
         delivery.save()
-        return jsonify([order.to_dict(), order_i.to_dict(), order_pro.to_dict(), delivery.to_dict()])
+        return jsonify(order.to_dict())
     except Exception as e:
         return jsonify(e)

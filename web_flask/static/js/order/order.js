@@ -92,7 +92,11 @@ $(function() {
         console.log("after request")
        ajax_request(apiUrl + "order", "POST", getLS("company"),
                      false, formData)
-        .then(response => console.log(response))
+        .then(response => {
+            deleteLS("order")
+            saveLS("order", response.id)
+            console.log(response)
+        })
         .catch(error => console.log(error))
        
     });
