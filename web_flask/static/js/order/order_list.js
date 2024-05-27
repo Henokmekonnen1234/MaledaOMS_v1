@@ -42,17 +42,14 @@ $(function() {
 
                 // Create table data cells
                 let txnCell = $('<td></td>').text(order.txn_no);
-                let customerCell = $('<td></td>').text(customer ? customer.full_name : 'N/A');
+                let customerCell = $('<td></td>').text( customer.full_name);
                 let statusCell = $('<td></td>').text(order.status);
                 let processCell = $('<td></td>').text(order_pro.find(pro => pro.order_id === order.id)?.process_status || 'N/A');
                 let updateCell = $('<td></td>').html('<a href="#" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i></a>');
 
                 // Create product dropdown cell
                 let productCell = $('<td></td>');
-                let productDropdown = $('<div class="dropdown"></div>');
-                let dropdownButton = $('<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Products</button>');
-                let dropdownMenu = $('<ul class="dropdown-menu"></ul>');
-
+               
                 // Fetch product details for each order item
                 ajax_request(apiUrl + `orderitem`, "GET", getLS("company"))
                     .then(orderProducts => {
@@ -61,25 +58,25 @@ $(function() {
                             if (order.id === orderProd.order_id) {
                                 let product = products.find(prod => prod.id === orderProd.prod_id);
                                 let dropdownItem = $(`
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <img src="../../static/img/upload/${product.image}" class="img-fluid rounded-start image" alt="${product.product}" width="50">
-                                            Someshit buyed 
-                                        </a>
-                                    </li>
+                                <div class="col-lg-10 col-md-7">
+                                    <img src="../../static/img/upload/${product.image}" class="img-fluid rounded-start" alt="${product.product}" width="15" height="20">
+                                    ${product.product} 
+                                        
+                                    </div>
                                 `);
-                                dropdownMenu.append(dropdownItem);
+
+                                productCell.append(dropdownItem);
+
+                                // Append cells to row
+                                
+
                             }
                         });
                     })
                     .catch(error => console.log(error));
 
-                productDropdown.append(dropdownButton, dropdownMenu);
-                productCell.append(productDropdown);
-
-                // Append cells to row
-                row.append(txnCell, customerCell, productCell, statusCell, processCell, updateCell);
-
+               
+                    row.append(txnCell, customerCell, productCell, statusCell, processCell, updateCell);
                 // Append row to table
                 $('#order-list').append(row);
             });

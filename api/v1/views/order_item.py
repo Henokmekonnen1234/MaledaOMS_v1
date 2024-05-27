@@ -22,4 +22,4 @@ def get_order_product():
         else:
             return jsonify(not_found), 404
     except Exception as e:
-        return jsonify(error_data), 505
+        return jsonify(e), 505
