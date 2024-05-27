@@ -19,7 +19,7 @@ $(function() {
         $(".product_updt").val(response.product)
         $(".quantity_updt").val(response.quantity)
         $(".catagory_updt").val(response.catagory)
-        $("#price").val(response.price)
+        $(".price").val(response.price)
     })
     .catch(error => console.log(error))
 
