@@ -10,7 +10,7 @@ from models.company import Company
 from models.customer import Customer
 from models.order import Order
 from models.order_item import OrderItem
-from models.oder_process import OrderProcess
+from models.order_process import OrderProcess
 from models.delivery import Delivery
 from models.inventory import Inventory
 from os import getenv

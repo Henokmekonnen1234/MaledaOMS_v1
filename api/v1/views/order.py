@@ -9,14 +9,14 @@ from models import storage
 from models.delivery import Delivery
 from models.inventory import Inventory
 from models.order_item import OrderItem
-from models.oder_process import OrderProcess
+from models.order_process import OrderProcess
 from models.order import Order
 import json
 
 
 @app_views.route("/order", methods=["POST"], strict_slashes=False)
 @jwt_required()
-def get_order():
+def create_order():
     try:
         comp_id = get_jwt_identity()
         if not comp_id:
@@ -86,7 +86,7 @@ def get_order_id(id: str = ""):
         return jsonify(error_data), 505
 
 
-@app_views.route("/order", methods=["GET"], slashes_strict=False)
+@app_views.route("/order", methods=["GET"], strict_slashes=False)
 @jwt_required()
 def get_order():
     try:
