@@ -21,8 +21,10 @@ $(function() {
     .then(response => {
         const select = $(".item-select")
         response.forEach(value => {
+            if (value.quantity > 0) {
             select.append($("<option>").attr("value", value.id).text(value.product))
             item_quan[value.id] = value.quantity
+            }
         })
     })
     .catch(error => console.log(error))

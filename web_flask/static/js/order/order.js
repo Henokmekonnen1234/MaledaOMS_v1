@@ -22,8 +22,10 @@ $(function() {
         ajax_request(apiUrl + "inventory", "GET", getLS("company"))
         .then(response => {
             response.forEach(value => {
-                itemSelect.append($("<option>").attr("value", value.id).text(value.product))
-                itemQuantities[value.id] = value.quantity
+                if (value.quantity > 0) {
+                    itemSelect.append($("<option>").attr("value", value.id).text(value.product))
+                    itemQuantities[value.id] = value.quantity
+                }
             })
         })
         .catch(error => console.log(error))
