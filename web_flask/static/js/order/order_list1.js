@@ -78,13 +78,32 @@ $(function() {
                         // Append cells to row and then row to table
                         row.append(txnCell, customerCell, productCell, statusCell, processCell, updateCell);
                         order_table.append(row);
+                        
                     })
                     .catch(error => console.log(error));
+                    
             });
+            
+            $('#example').DataTable({
+                // Enable paging
+                paging: true,
+                // Enable searching
+                searching: true,
+                // Enable data export buttons
+                buttons: [
+                    'csv', 'excel', 'pdf', 'print'
+                ],
+                // Enable responsive extension
+                responsive: true
+            });
+            
         } else {
             console.error("Orders is not an array:", orders);
         }
+        
     }).catch(error => console.log(error));
+
+    
 
     // Event delegation for dynamically added elements
     $(document).on("click", ".update_prod", function(event) {
@@ -94,4 +113,5 @@ $(function() {
         window.location.href = webUrl + "order";
         console.log("clicked");
     });
+    
 });
