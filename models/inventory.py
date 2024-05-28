@@ -22,6 +22,7 @@ class Inventory(BaseModel, Base):
     catagory = Column(String(100), nullable=True)
     quantity = Column(Integer, nullable=False)
     price = Column(Float, default=0.0, nullable=False)
+    status = Column(String(30), default="On hand", nullable=True)
     company_id = Column(String(60), ForeignKey("company.id"),
                      nullable=False)
 

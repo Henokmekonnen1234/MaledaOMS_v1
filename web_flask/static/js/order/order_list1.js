@@ -83,7 +83,6 @@ $(function() {
                     .catch(error => console.log(error));
                     
             });
-            
             $('#example').DataTable({
                 // Enable paging
                 paging: true,
@@ -96,7 +95,6 @@ $(function() {
                 // Enable responsive extension
                 responsive: true
             });
-            
         } else {
             console.error("Orders is not an array:", orders);
         }
