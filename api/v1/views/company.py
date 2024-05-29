@@ -100,6 +100,7 @@ def login():
     try:
         get_value = request.get_json()
         value = storage.filter(Company, "email", get_value["email"])
+        print(value)
         if value:
             if decrypt(get_value["password"], value.password):
                 return jsonify(

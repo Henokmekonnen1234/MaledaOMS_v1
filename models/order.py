@@ -30,6 +30,8 @@ class Order(BaseModel, Base):
     status = Column(String(100), default="Processing", nullable=False)
     delivery = relationship("Delivery", backref="order",
                             cascade="all, delete, delete-orphan")
+    company_id = Column(String(60), ForeignKey("company.id"),
+                        nullable=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

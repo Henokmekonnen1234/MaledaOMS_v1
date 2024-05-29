@@ -24,6 +24,7 @@ def create_order():
         order_data = request.form.to_dict()
         prod_value = json.loads(order_data["prod_value"])
         order_data["txn_no"] = generate_transaction_number()
+        order_data["company_id"] = comp_id
         delivery_add = {"location": order_data["address"]}
         del order_data["prod_value"]
         del order_data["address"]
@@ -68,20 +69,24 @@ def get_order_id(id: str = ""):
         order = storage.get(Order, id)
         if not order:
             return jsonify(not_found), 404
-        order_proces = storage.filter(OrderProcess, "order_id", order.id)
-        order_prod = []
-        for value in storage.all(OrderItem).values():
-            if order.id == value.order_id:
-                order_prod.append(value.to_dict())
-        delivery = storage.filter(Delivery, "order_id", order.id)
-        return jsonify(
-            {
-                "order": order.to_dict(),
-                "order_prod": order_prod,
-                "order_proces": order_proces.to_dict(),
-                "delivery": delivery.to_dict()
-            }
-        )
+        if order.company_id == comp_id:
+            order_proces = storage.filter(OrderProcess, "order_id", order.id)
+            order_item = storage.filter_all(OrderItem, "order_id", order.id)
+            order_prod = []
+            for value in storage.all(OrderItem).values():
+                if order.id == value.order_id:
+                    order_prod.append(value.to_dict())
+            delivery = storage.filter(Delivery, "order_id", order.id)
+            return jsonify(
+                {
+                    "order": order.to_dict(),
+                    "order_prod": order_prod,
+                    "order_proces": order_proces.to_dict(),
+                    "delivery": delivery.to_dict()
+                }
+            )
+        else:
+            return jsonify(not_found), 404
     except Exception as e:
         return jsonify(error_data), 505
 
@@ -93,7 +98,9 @@ def get_order():
         comp_id = get_jwt_identity()
         if not comp_id:
             return jsonify(not_found), 401
-        order = [ value.to_dict() for value in storage.all(Order).values()]
+        order = [value.to_dict()
+                 for value in storage.all(Order).values()
+                 if value.company_id == comp_id]
         if order:
             return jsonify(order)
         else:

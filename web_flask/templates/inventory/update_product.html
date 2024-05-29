@@ -68,6 +68,13 @@
             </div>
               </div>
 
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Status</div>
+                <div class="col-lg-9 col-md-8" >
+                    <span class="status"></span>
+            </div>
+              </div>
+
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Category</div>
                     <div class="col-lg-9 col-md-8">
@@ -109,6 +116,16 @@
                       <label for="description" class="col-md-4 col-lg-3 col-form-label">Price</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="price" type="float" class="form-control price" id="price" >
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="status" class="col-md-4 col-lg-3 col-form-label">Product status</label>
+                      <div class="col-md-8 col-lg-9">
+                        <select id="status" name="status" class="form-select status_updt" data-live-search="true">
+                          <option value="On hand">On hand</option>
+                          <option value="Order">Order</option>
+                          </select>
                       </div>
                     </div>
 

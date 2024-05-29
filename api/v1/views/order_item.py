@@ -23,3 +23,20 @@ def get_order_product():
             return jsonify(not_found), 404
     except Exception as e:
         return jsonify(e), 505
+    
+
+# @app_views.route("/orderitem/<id>", methods=["GET"], strict_slashes=False)
+# @jwt_required()
+# def get_ordder_product(id: str):
+#     try:
+#         comp_id = get_jwt_identity()
+#         if not comp_id:
+#             return jsonify(not_found), 401
+#         order_item = storage.filter(OrderItem, "order_id", id)
+
+#         if order_item:
+#             return jsonify(order_item)
+#         else:
+#             return jsonify(not_found), 404
+#     except Exception as e:
+#         return jsonify(e), 505

@@ -79,30 +79,31 @@ $(function() {
                         row.append(txnCell, customerCell, productCell, statusCell, processCell, updateCell);
                         order_table.append(row);
                         
+                        
                     })
                     .catch(error => console.log(error));
-                    
             });
-            $('#example').DataTable({
-                // Enable paging
-                paging: true,
-                // Enable searching
-                searching: true,
-                // Enable data export buttons
-                buttons: [
-                    'csv', 'excel', 'pdf', 'print'
-                ],
-                // Enable responsive extension
-                responsive: true
+            
+            Promise.all(rowPromises).then(() => {
+                order_table.DataTable({
+                    retrieve: true,
+                    paging: true,
+                    searching: true,
+                    buttons: [
+                        'csv', 'excel', 'pdf', 'print'
+                    ],
+                    responsive: true
+                });
             });
+
         } else {
             console.error("Orders is not an array:", orders);
         }
-        
+       
+      
     }).catch(error => console.log(error));
 
-    
-
+     
     // Event delegation for dynamically added elements
     $(document).on("click", ".update_prod", function(event) {
         event.preventDefault();

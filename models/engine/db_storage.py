@@ -109,6 +109,16 @@ class DBStorage:
             return value
         else:
             return None
+    
+    def filter_all(self, cls, column_name, value):
+        """This will filter the values of the class"""
+        value = self.__session().query(cls).filter(getattr(cls, column_name
+                                                           ) == value)\
+                .all()
+        if value is not None:
+            return value
+        else:
+            return None
         
     def count(self, cls=None):
         """

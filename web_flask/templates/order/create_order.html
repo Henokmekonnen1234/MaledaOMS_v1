@@ -28,11 +28,69 @@
               <!-- Multi Columns Form -->
               <form class="row g-3" id="order-form">
                 <div class="col-md-12">
-                    <label for="cus_id" class="form-label">Customer Name</label>
-                    <select id="cus_id" class="form-select">
-                      <option selected disabled>Choose...</option>
-                    </select>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="col-md-8">
+                        <label for="full_name" class="form-label">full Name</label>
+                        <input type="text" name="full_name" class="form-control" id="full_name" required>
+                      </div>
+                      <div class="col-8">
+                        <label for="telegram" class="form-label">Telegram</label>
+                        <input type="text" name="telegram" class="form-control" id="telegram" placeholder="@username" required>
+                      </div>
+                      <div class="col-8">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" name="address" class="form-control" id="address" placeholder="Apartment, studio, or floor" required>
+                      </div>
+                      <div class="col-8">
+                          <label for="phone" class="form-label">Phone</label>
+                          <input type="tel" name="phone_no" class="form-control" id="phone_no" placeholder="0912131415" required>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="city" class="form-label">City</label>
+                        <select name="city" id="city" class="form-select selectpicker" required>
+                          <option selected disabled>Choose a town in Addis Ababa</option>
+                          <option value="Ayat">Ayat</option>
+                          <option value="Summit 72">Summit 72</option>
+                          <option value="Summit fiyel bet">Summit fiyel bet</option>
+                          <option value="Megenagna">Megenagna</option>
+                          <option value="Piasa">Piasa</option>
+                          <option value="CMC">CMC</option>
+                          <option value="Bole">Bole</option>
+                          <option value="Kazanchis">Kazanchis</option>
+                          <option value="Mexico">Mexico</option>
+                          <option value="Sarbet">Sarbet</option>
+                          <option value="Meskel Square">Meskel Square</option>
+                          <option value="Gotera">Gotera</option>
+                          <option value="Goro">Goro</option>
+                          <option value="Piassa">Piassa</option>
+                          <option value="Kera">Kera</option>
+                          <option value="Lideta">Lideta</option>
+                          <option value="Yeka">Yeka</option>
+                          <option value="Kirkos">Kirkos</option>
+                          <option value="Kolfe">Kolfe</option>
+                          <option value="Bambis">Bambis</option>
+                          <option value="Nifas Silk">Nifas Silk</option>
+                          <option value="Bole Bulbula">Bole Bulbula</option>
+                          <option value="Gulele">Gulele</option>
+                          <option value="Arat Kilo">Arat Kilo</option>
+                          <option value="Merkato">Merkato</option>
+                          <option value="Saris">Saris</option>
+                          <option value="Entoto">Entoto</option>
+                          <option value="Kotebe">Kotebe</option>
+                          <option value="Gurage">Gurage</option>
+                          <option value="Leghar">Leghar</option>
+                          <option value="Sileshi">Sileshi</option>
+                          <option value="Tulba">Tulba</option>
+                          <option value="Yeka Terara">Yeka Terara</option>
+                        </select>
+                      </div>
+                    </div>
                 </div>
+                </div>
+
+
+                <div class="col-md-12">
                 <div class="card">
                     <div class="card-body" id="item-container">
                     <div class="row g-3 item-row">
@@ -51,7 +109,8 @@
             <div class="text-center">
                 <button type="button" id="add-item" class="btn btn-primary">add item</button>
             </div>    
-            </div>
+                </div>
+                 </div>
                 
                 <div class="col-12">
                   <label for="address" class="form-label">Delivery Address</label>
