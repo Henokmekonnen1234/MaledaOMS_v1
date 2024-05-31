@@ -101,7 +101,8 @@ $(function() {
                 buttons: [
                     'csv', 'excel', 'pdf', 'print'
                 ],
-                responsive: true
+                responsive: true,
+                order: [[1, 'asc']]
             });
         });
     }).catch(error => console.log(error));
@@ -113,5 +114,12 @@ $(function() {
         saveLS("order", $(this).attr("id"));
         window.location.href = webUrl + "order";
         console.log("clicked");
+    });
+
+    $(document).on("click", ".update_prod", function(event) {
+        event.preventDefault();
+        deleteLS("order");
+        saveLS("order", $(this).attr("id"));
+        window.location.href = webUrl + "update/order";
     });
 });

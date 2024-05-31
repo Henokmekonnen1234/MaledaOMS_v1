@@ -74,8 +74,12 @@ $(function() {
 
         const formData = new FormData();
         let prod_value = {}
-        let cust_id = $("#cus_id").val()
         let address = $("#address").val()
+        let full_name = $("#full_name").val()
+        let telegram = $("#telegram").val()
+        let phone = $("#phone_no").val()
+        let city = $("#city").val()
+
         prod_value[$("#prod_id").val()] = $("#quantity").val()
         
         $('#item-container .item-row').each(function() {
@@ -84,7 +88,11 @@ $(function() {
             prod_value[item] = quantity
             
         });
-        formData.append("cus_id", cust_id)
+
+        formData.append("full_name", full_name)
+        formData.append("telegram", telegram)
+        formData.append("phone_no", phone)
+        formData.append("city", city)
         formData.append("address", address)
         formData.append("prod_value", JSON.stringify(prod_value));
         

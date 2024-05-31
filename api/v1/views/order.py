@@ -6,6 +6,7 @@ from api.v1.views.utility import generate_transaction_number
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import storage
+from models.customer import Customer
 from models.delivery import Delivery
 from models.inventory import Inventory
 from models.order_item import OrderItem
@@ -21,40 +22,52 @@ def create_order():
         comp_id = get_jwt_identity()
         if not comp_id:
             return jsonify(not_found), 401
+
         order_data = request.form.to_dict()
-        prod_value = json.loads(order_data["prod_value"])
+        if not order_data:
+            return jsonify(not_found), 404
+
+        cust_keys = ["full_name", "telegram", "phone_no", "city", "address"]
+        cust_data = {key: order_data.pop(key) for key in cust_keys}
+        cust_data["company_id"] = comp_id
+        customer = Customer(**cust_data)
+        customer.save()
+
+        prod_value = json.loads(order_data.pop("prod_value"))
+        order_data["cus_id"] = customer.id
         order_data["txn_no"] = generate_transaction_number()
         order_data["company_id"] = comp_id
-        delivery_add = {"location": order_data["address"]}
-        del order_data["prod_value"]
-        del order_data["address"]
         order_data["total_amnt"] = 0.0
+
         for key, value in prod_value.items():
             inventory = storage.get(Inventory, key)
-            prod_value[key] = int(value)
-            order_data["total_amnt"] += (inventory.price * prod_value[key])
-            inventory.quantity -= prod_value[key]
+            quantity = int(value)
+            prod_value[key] = quantity
+            order_data["total_amnt"] += inventory.price * quantity
+            inventory.quantity -= quantity
             inventory.save()
+
         order = Order(**order_data)
         order.save()
-        order_prod = []
+
+        order_items = []
         for key, value in prod_value.items():
-            order_item = {}
-            order_item["order_id"] = order.id
-            order_item["prod_id"] = key
-            order_item["quantity"] = value
-            order_i = OrderItem(**order_item)
-            order_i.save()
-            order_prod.append(order_i.to_dict())
-        order_p = {"order_id": order.id}
-        order_pro = OrderProcess(**order_p)
-        delivery_add = {"order_id": order.id}
-        delivery = Delivery(**delivery_add)
-        order_pro.save()
+            order_item_data = {"order_id": order.id, "prod_id": key, "quantity": value}
+            order_item = OrderItem(**order_item_data)
+            order_item.save()
+            order_items.append(order_item.to_dict())
+
+        order_process = OrderProcess(order_id=order.id)
+        delivery = Delivery(order_id=order.id, location=cust_data["address"])
+        order_process.save()
         delivery.save()
+
         return jsonify(order.to_dict())
+
     except Exception as e:
+        print(f"Exception occurred: {e}")
         return jsonify(error_data), 505
+
 
 
 @app_views.route("/order/<id>", methods=["GET"], strict_slashes=False)
