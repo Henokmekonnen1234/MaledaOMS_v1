@@ -7,7 +7,7 @@ import { saveLS,getLS } from "../cookies.js";
 $(function() {
     let itemIndex = 1; // Initialize item index for unique IDs
     let selectedQuantity = 0;
-    const itemQuantities  = {}
+    const itemQuantities  = new FormData();
     ajax_request(apiUrl + `order/${getLS("order")}`, "GET", getLS("company"))
     .then(response => {
 
@@ -39,42 +39,36 @@ $(function() {
                 if (value.id == order_p.prod_id && value.quantity > 0) {
                     itemSelect.append($("<option>").attr("value", value.id)
                     .attr("selected", true).text(value.product))
-                    
-                    itemQuantities[JSON.stringify(value.id)] = value.quantity
+
+                    itemQuantities[String(value.id)] = value.quantity
+                    const quantityCol = $('<div>').addClass('col-md-4');
+                    const quantityLabel = $('<label>').attr('for', `quantity_${itemIndex}`).addClass('form-label').text('Quantity');
+                    const quantityInput = $('<input>').attr('type', 'number').attr('id', `quantity_${itemIndex}`).addClass('form-control quantity-input').val(order_p.quantity)
+                                            .attr("max", value.quantity).attr("min", 1);
+                    itemCol.append(itemLabel).append(itemSelect);
+                    quantityCol.append(quantityLabel).append(quantityInput);
+                    newRow.append(itemCol).append(quantityCol);
+
+                        // Create the Remove button column
+                    const removeCol = $('<div>').addClass('col-md-2 d-flex align-items-end');
+                    const removeButton = $('<button>')
+                        .attr('type', 'button')
+                        .addClass('btn btn-danger btn-remove')
+                        .append($('<i>').addClass('bi bi-trash'));
+                    removeCol.append(removeButton);
+                    newRow.append(removeCol);
                 } else {
                     itemSelect.append($("<option>").attr("value", value.id).text(value.product))
-                    itemQuantities[JSON.stringify(value.id)] = value.quantity
+                    itemQuantities[String(value.id)] = value.quantity
+
+
                 }
+
             })
         })
         .catch(error => console.log(error))
-        console.log(typeof itemQuantities)
-        // console.log(order_p.prod_id)
-        console.log(itemQuantities[String(order_p.prod_id)])
 
-        for (let [key, value] of itemQuantities.entries()) {
-            console.log(key == order_p.prod_id)           
-        }
-
-
-        itemCol.append(itemLabel).append(itemSelect);
-
-        const quantityCol = $('<div>').addClass('col-md-4');
-        const quantityLabel = $('<label>').attr('for', `quantity_${itemIndex}`).addClass('form-label').text('Quantity');
-        const quantityInput = $('<input>').attr('type', 'number').attr('id', `quantity_${itemIndex}`).addClass('form-control quantity-input').val(order_p.quantity)
-                                .attr("max", itemQuantities[order_p.prod_id]).attr("min", 1);
-        quantityCol.append(quantityLabel).append(quantityInput);
-
-        newRow.append(itemCol).append(quantityCol);
-
-        // Create the Remove button column
-    const removeCol = $('<div>').addClass('col-md-2 d-flex align-items-end');
-    const removeButton = $('<button>')
-        .attr('type', 'button')
-        .addClass('btn btn-danger btn-remove')
-        .append($('<i>').addClass('bi bi-trash'));
-    removeCol.append(removeButton);
-    newRow.append(removeCol);
+        console.log(itemQuantities)
 
         $('#item-container').append(newRow);
         })
@@ -99,7 +93,7 @@ $(function() {
             })
         })
         .catch(error => console.log(error))
-        console.log(itemQuantities)
+
         itemCol.append(itemLabel).append(itemSelect);
 
         const quantityCol = $('<div>').addClass('col-md-4');
@@ -124,7 +118,7 @@ $(function() {
     $(document).on('change', '.item-select', function() {
         const selectedItem = $(this).val();
         const quantityInput = $(this).closest('.item-row').find('.quantity-input');
-        
+
         if (itemQuantities[selectedItem]) {
             quantityInput.attr('min',1);
             quantityInput.attr('max', itemQuantities[selectedItem]);
@@ -144,23 +138,27 @@ $(function() {
 
         const formData = new FormData();
         let prod_value = {}
-        
+
+        let address = $("#address").val()
+
         $('#item-container .item-row').each(function() {
             const item = $(this).find('.item-select').val();
             const quantity = $(this).find('.quantity-input').val();
             prod_value[item] = quantity
-            
         });
 
         formData.append("cus_id", $("#cus_id").val())
-        formData.append("address",  $("#address").val())
+        formData.append("process_status", $("#process").val())
+        formData.append("status", $("#status").val())
+        formData.append("address", address)
         formData.append("prod_value", JSON.stringify(prod_value));
-        
+
         for (let [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);            
+            console.log(`${key}: ${value}`);
         }
         console.log("after request")
-       ajax_request(apiUrl + "order", "POST", getLS("company"),
+       ajax_request(apiUrl + `order/${getLS("order")}`, "PUT", getLS("company"),
+
                      false, formData)
         .then(response => {
             deleteLS("order")
@@ -168,7 +166,7 @@ $(function() {
             window.location.assign(webUrl + "order")
         })
         .catch(error => console.log(error))
-       
+
     });
 
 })
