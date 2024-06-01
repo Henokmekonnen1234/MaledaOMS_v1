@@ -122,24 +122,40 @@ def get_order():
         return jsonify(error_data), 505
 
 
-@app_views.route("/order/<id>", methods=["PUT"], strict_slashes=False)
-@jwt_required()
-def update_order(id: str):
-    try:
-        comp_id = get_jwt_identity()
-        if not comp_id:
-            return jsonify(not_found), 401
-        if not id:
-            return jsonify(not_found), 404
-        updated_order = request.form.to_dict()
-        order_process = {"process_status": updated_order["process"]}
-        del updated_order["process"]
-        order_prod = update_order["prod_value"]
-        del update_order["prod_value"]
-        order_prod2 = {key: value for key,value in order_prod.items()}
-        order_product = storage.filter_all(OrderItem, "order_id", id)
-        for key, value in order_prod.items():
-            for prod in order_product:
-                if prod.prod_id in order_prod2.keys():
-                    if prod.prod_id == key:
-                        
+# @app_views.route("/order/<id>", methods=["PUT"], strict_slashes=False)
+# @jwt_required()
+# def update_order(id: str):
+#     try:
+#         comp_id = get_jwt_identity()
+#         if not comp_id:
+#             return jsonify(not_found), 401
+#         if not id:
+#             return jsonify(not_found), 404
+#         order_prod = update_order["prod_value"]
+#         del update_order["prod_value"]
+#         updated_order = request.form.to_dict()
+#         process = storage.filter(OrderProcess, "order_id", id)
+#         if updated_order["process"]:
+#             setattr(process, "process_status", updated_order["process"])
+#             process.save()
+#         del updated_order["process"]
+        
+#         order_prod2 = {key: value for key,value in order_prod.items()}
+#         order_product = storage.filter_all(OrderItem, "order_id", id)
+#         for key, value in order_prod.items():
+#             for prod in order_product:
+#                 if prod.prod_id in order_prod2.keys():
+#                     if prod.prod_id == key:
+#                         setattr(prod, "quantity", value)
+#                         prod.save()
+#                         order_prod2.pop(key)
+#                 else:
+#                     storage.delete(prod)
+#                     storage.save()
+#         del order_prod
+
+#         for key, value in prod_value.items():
+#             order_item_data = {"order_id": order.id, "prod_id": key, "quantity": value}
+#             order_item = OrderItem(**order_item_data)
+#             order_item.save()
+#             order_items.append(order_item.to_dict())

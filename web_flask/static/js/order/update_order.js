@@ -16,12 +16,13 @@ $(function() {
         let order_proces = response.order_proces
         ajax_request(apiUrl + `customer`, "GET", getLS("company"))
         .then(customer => {
-            if (customer.id == order.cus_id) {
-                $("#cus_id").append($("<option>").attr("value", customer.id).attr("selected", true).text(customer.full_name))
-            } else {
-                $("#cus_id").append($("<option>").attr("value", customer.id).text(customer.full_name))
-            }
-            
+            customer.forEach(cust_value => {
+                if (cust_value.id == order.cus_id) {
+                    $("#cus_id").append($("<option>").attr("value", cust_value.id).attr("selected", true).text(cust_value.full_name))
+                } else {
+                    $("#cus_id").append($("<option>").attr("value", cust_value.id).text(cust_value.full_name))
+                }
+            })
         })
         .catch(error => console.error(error))
 
@@ -138,34 +139,33 @@ $(function() {
 
         const formData = new FormData();
         let prod_value = {}
-
-        let address = $("#address").val()
-
+        let sum = 0;
         $('#item-container .item-row').each(function() {
             const item = $(this).find('.item-select').val();
             const quantity = $(this).find('.quantity-input').val();
             prod_value[item] = quantity
+            sum += Number.parseInt(quantity)
         });
 
         formData.append("cus_id", $("#cus_id").val())
         formData.append("process_status", $("#process").val())
         formData.append("status", $("#status").val())
-        formData.append("address", address)
         formData.append("prod_value", JSON.stringify(prod_value));
-
+        formData.append("total_amnt", sum)
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
+            
         }
-        console.log("after request")
-       ajax_request(apiUrl + `order/${getLS("order")}`, "PUT", getLS("company"),
+        console.log("after request", sum)
+    //    ajax_request(apiUrl + `order/${getLS("order")}`, "PUT", getLS("company"),
 
-                     false, formData)
-        .then(response => {
-            deleteLS("order")
-            saveLS("order", response.id)
-            window.location.assign(webUrl + "order")
-        })
-        .catch(error => console.log(error))
+    //                  false, formData)
+    //     .then(response => {
+    //         deleteLS("order")
+    //         saveLS("order", response.id)
+    //         window.location.assign(webUrl + "order")
+    //     })
+    //     .catch(error => console.log(error))
 
     });
 
