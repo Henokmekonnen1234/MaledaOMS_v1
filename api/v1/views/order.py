@@ -120,3 +120,26 @@ def get_order():
             return jsonify(not_found), 404
     except Exception as e:
         return jsonify(error_data), 505
+
+
+@app_views.route("/order/<id>", methods=["PUT"], strict_slashes=False)
+@jwt_required()
+def update_order(id: str):
+    try:
+        comp_id = get_jwt_identity()
+        if not comp_id:
+            return jsonify(not_found), 401
+        if not id:
+            return jsonify(not_found), 404
+        updated_order = request.form.to_dict()
+        order_process = {"process_status": updated_order["process"]}
+        del updated_order["process"]
+        order_prod = update_order["prod_value"]
+        del update_order["prod_value"]
+        order_prod2 = {key: value for key,value in order_prod.items()}
+        order_product = storage.filter_all(OrderItem, "order_id", id)
+        for key, value in order_prod.items():
+            for prod in order_product:
+                if prod.prod_id in order_prod2.keys():
+                    if prod.prod_id == key:
+                        
