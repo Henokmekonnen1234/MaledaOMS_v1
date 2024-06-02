@@ -125,55 +125,135 @@ def get_order():
 @app_views.route("/order/<id>", methods=["PUT"], strict_slashes=False)
 @jwt_required()
 def update_order_id(id: str):
-    # try:
-    comp_id = get_jwt_identity()
-    if not comp_id:
-        return jsonify(not_found), 401
-    if not id:
-        return jsonify(not_found), 404
-    order = storage.get(Order, id)
-    if not order:
-        return jsonify(not_found), 404
-    update_order = request.form.to_dict()
-    order_prod = json.loads(update_order.pop("prod_value"))
-    process = storage.filter(OrderProcess, "order_id", order.id)
-    if update_order["process_status"]:
-        setattr(process, "process_status", update_order.pop("process_status"))
-        process.save()
-    for key, value in update_order.items():
-        setattr(order, key, value)
-    order.save()
-    order_prod2 = {key: value for key,value in order_prod.items()}
-    order_product = storage.filter_all(OrderItem, "order_id", id)
-    print("update_order: ", order_product[0].prod_id in order_prod2.keys())
-    for product in order_product:
-        if product.prod_id not in order_prod2.keys():
-            storage.delete(prod)
-            storage.save()
-            print("deleted")
+    try:
+        comp_id = get_jwt_identity()
+        if not comp_id:
+            return jsonify(not_found), 401
+        if not id:
+            return jsonify(not_found), 404
 
-    for prod in order_product:
-        for key, value in order_prod.items():
-            print(prod.to_dict())
-            if prod.prod_id in order_prod2.keys():
-                if prod.prod_id == key:
-                    setattr(prod, "quantity", value)
-                    prod.save()
-                    inventory = storage.get(Inventory, prod.prod_id)
-                    inventory.quantity -= int(value)
+        order = storage.get(Order, id)
+        if not order:
+            return jsonify(not_found), 404
+
+        update_order = request.form.to_dict()
+        if "prod_value" not in update_order:
+            return jsonify({"error": "Product values not provided"}), 400
+
+        order_prod = json.loads(update_order.pop("prod_value"))
+
+        # Update OrderProcess if process_status is provided
+        if "process_status" in update_order:
+            process = storage.filter(OrderProcess, "order_id", order.id)
+            if process:
+                setattr(process, "process_status", update_order.pop("process_status"))
+                process.save()
+
+        # Update the order fields
+        for key, value in update_order.items():
+            setattr(order, key, value)
+        order.save()
+
+        # Handle order products
+        order_prod_dict = {key: value for key, value in order_prod.items()}
+        existing_order_products = storage.filter_all(OrderItem, "order_id", id)
+
+        # Delete order products not in the updated list
+        for product in existing_order_products:
+            if product.prod_id not in order_prod_dict:
+                storage.delete(product)
+                storage.save()
+
+        # Update existing order products and handle inventory
+        for product in existing_order_products:
+            if product.prod_id in order_prod_dict:
+                if product.quantity != int(order_prod_dict[product.prod_id]):
+                    inventory = storage.get(Inventory, product.prod_id)
+                    inventory.quantity += product.quantity  # Revert the old quantity
+                    inventory.quantity -= int(order_prod_dict[product.prod_id])  # Apply the new quantity
                     inventory.save()
-                    order_prod2.pop(key)
-                
-    del order_prod
-    if order_prod2 is not None:
-        for key, value in order_prod2.items():
-            order_item_data = {"order_id": order.id, "prod_id": key, "quantity": value}
-            order_item = OrderItem(**order_item_data)
-            order_item.save()
-            inventory = storage.get(Inventory, key)
-            inventory.quantity -= int(value)
+
+                    product.quantity = int(order_prod_dict[product.prod_id])
+                    product.save()
+
+                order_prod_dict.pop(product.prod_id)
+
+        # Add new order products
+        for prod_id, quantity in order_prod_dict.items():
+            order_item_data = {"order_id": order.id, "prod_id": prod_id, "quantity": int(quantity)}
+            new_order_item = OrderItem(**order_item_data)
+            new_order_item.save()
+
+            inventory = storage.get(Inventory, prod_id)
+            inventory.quantity -= int(quantity)
             inventory.save()
-    return jsonify(order.to_dict())
-    # except Exception as e:
-    #     print(e)
-    #     return jsonify(error_data), 505
+
+        return jsonify(order.to_dict())
+
+    except Exception as e:
+        print(e)
+        return jsonify(error_data), 505
+
+
+
+
+
+
+
+# @app_views.route("/order/<id>", methods=["PUT"], strict_slashes=False)
+# @jwt_required()
+# def update_order_id(id: str):
+#     # try:
+#     comp_id = get_jwt_identity()
+#     if not comp_id:
+#         return jsonify(not_found), 401
+#     if not id:
+#         return jsonify(not_found), 404
+#     order = storage.get(Order, id)
+#     if not order:
+#         return jsonify(not_found), 404
+#     update_order = request.form.to_dict()
+#     order_prod = json.loads(update_order.pop("prod_value"))
+#     process = storage.filter(OrderProcess, "order_id", order.id)
+#     if update_order["process_status"]:
+#         setattr(process, "process_status", update_order.pop("process_status"))
+#         process.save()
+#     for key, value in update_order.items():
+#         setattr(order, key, value)
+#     order.save()
+#     order_prod2 = {key: value for key,value in order_prod.items()}
+#     order_product = storage.filter_all(OrderItem, "order_id", id)
+#     print("update_order: ", order_product[0].prod_id in order_prod2.keys())
+#     for product in order_product:
+#         if product.prod_id not in order_prod2.keys():
+#             storage.delete(product)
+#             storage.save()
+#             print("deleted")
+
+#     for prod in order_product:
+#         for key, value in order_prod.items():
+#             print(prod.to_dict())
+#             if prod.prod_id in order_prod2.keys():
+#                 if prod.prod_id == key and prod.quantity != int(value):
+#                     setattr(prod, "quantity", value)
+#                     prod.save()
+#                     inventory = storage.get(Inventory, prod.prod_id)
+#                     inventory.quantity -= int(value)
+#                     inventory.save()
+#                     order_prod2.pop(key)
+#                 elif prod.prod_id == key and prod.quantity == int(value):
+#                     order_prod2.pop(key)
+                
+#     del order_prod
+#     if order_prod2 is not None:
+#         for key, value in order_prod2.items():
+#             order_item_data = {"order_id": order.id, "prod_id": key, "quantity": value}
+#             order_item = OrderItem(**order_item_data)
+#             order_item.save()
+#             inventory = storage.get(Inventory, key)
+#             inventory.quantity -= int(value)
+#             inventory.save()
+#     return jsonify(order.to_dict())
+#     # except Exception as e:
+#     #     print(e)
+#     #     return jsonify(error_data), 505
