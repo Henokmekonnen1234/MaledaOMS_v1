@@ -2,7 +2,7 @@
 
 import { ajax_request } from "../requests.js";
 import { apiUrl,webUrl } from "../constants.js";
-import { saveLS,getLS } from "../cookies.js";
+import { saveLS,getLS, deleteLS } from "../cookies.js";
 
 $(function() {
     let itemIndex = 1; // Initialize item index for unique IDs
@@ -157,15 +157,14 @@ $(function() {
             
         }
         console.log("after request", sum)
-    //    ajax_request(apiUrl + `order/${getLS("order")}`, "PUT", getLS("company"),
-
-    //                  false, formData)
-    //     .then(response => {
-    //         deleteLS("order")
-    //         saveLS("order", response.id)
-    //         window.location.assign(webUrl + "order")
-    //     })
-    //     .catch(error => console.log(error))
+       ajax_request(apiUrl + `order/${getLS("order")}`, "PUT", getLS("company"),
+                     false, formData)
+        .then(response => {
+            deleteLS("order")
+            saveLS("order", response.id)
+            window.location.assign(webUrl + "order")
+        })
+        .catch(error => console.log(error))
 
     });
 
