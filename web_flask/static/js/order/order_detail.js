@@ -3,6 +3,7 @@
 import { ajax_request } from "../requests.js";
 import { apiUrl, webUrl } from "../constants.js";
 import { getLS } from "../cookies.js";
+import { formatDate } from "../date_format.js";
 
 $(function() {
     ajax_request(apiUrl + `order/${getLS("order")}`, "GET", getLS("company"))
@@ -11,6 +12,8 @@ $(function() {
         const order_prod = response.order_prod
         const order_proces = response.order_proces
         const delivery = response.delivery
+        $(".order_date").text(formatDate(order.order_date))
+        $(".process_date").text(formatDate(order_proces.process_date))
         $(".txn_no").text(order.txn_no)
         $(".status").text(order.status)
         $(".total_amt").text(order.total_amnt)
