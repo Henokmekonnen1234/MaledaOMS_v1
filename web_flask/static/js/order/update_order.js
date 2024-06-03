@@ -14,6 +14,7 @@ $(function() {
         let order = response.order
         let order_prod = response.order_prod
         let order_proces = response.order_proces
+        $("#status").append($("<option>").attr("value", order.status).attr("selected", true).text(order.status))
         ajax_request(apiUrl + `customer`, "GET", getLS("company"))
         .then(customer => {
             customer.forEach(cust_value => {
@@ -151,10 +152,9 @@ $(function() {
         formData.append("process_status", $("#process").val())
         formData.append("status", $("#status").val())
         formData.append("prod_value", JSON.stringify(prod_value));
-        formData.append("total_amnt", sum)
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
-            
+
         }
         console.log("after request", sum)
        ajax_request(apiUrl + `order/${getLS("order")}`, "PUT", getLS("company"),
