@@ -79,7 +79,27 @@ $(function() {
         let telegram = $("#telegram").val()
         let phone = $("#phone_no").val()
         let city = $("#city").val()
+        let cus_id = $("#cus_id").val()
 
+        if (full_name) {
+            formData.append("full_name", full_name)
+        }
+
+        if (telegram) {
+            formData.append("telegram", telegram)
+        }
+        
+        if (phone) {
+            formData.append("phone_no", phone)
+        }
+
+        if (city) {
+            formData.append("city", city)
+        }
+
+        if (cus_id) {
+            formData.append("cus_id", cus_id)
+        }
         prod_value[$("#prod_id").val()] = $("#quantity").val()
         
         $('#item-container .item-row').each(function() {
@@ -89,11 +109,9 @@ $(function() {
             
         });
 
-        formData.append("full_name", full_name)
-        formData.append("telegram", telegram)
-        formData.append("phone_no", phone)
-        formData.append("city", city)
+        
         formData.append("address", address)
+        formData.append("delivery_date", $("#delivery_date").val())
         formData.append("prod_value", JSON.stringify(prod_value));
         
         for (let [key, value] of formData.entries()) {

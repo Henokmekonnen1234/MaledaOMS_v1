@@ -109,6 +109,12 @@ def update_delivery():
     return render_template("./delivery/update_delivery.html", cache_id= uuid4())
 
 
+@app.route("/list/today-delivery")
+def delivery_today_list():
+    """This will fetch the profile page"""
+    return render_template("./delivery/delivery_today_list.html", cache_id= uuid4())
+
+
 if __name__ == "__main__":
     host = environ.get("API_HOST1")
     port = environ.get("API_PORT1")

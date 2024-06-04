@@ -59,6 +59,12 @@ $(function() {
 
     }).catch(error => console.error(error))
 
+    $(document).on("click", ".filter-option", function(event) {
+        event.preventDefault();
+        const filter = $(this).data("filter");
+        loadData(filter);
+    });
+
     $(document).on("click", ".order_info", function(event) {
         event.preventDefault()
         deleteLS("order")

@@ -15,7 +15,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Home</a></li>
-          <li class="breadcrumb-item">Delivery</li>
+          <li class="breadcrumb-item">Today Delivery</li>
           <li class="breadcrumb-item active">Lists</li>
         </ol>
       </nav>
@@ -28,7 +28,7 @@
           <div class="card overflow-auto">
               
             <div class="card-body">
-              <h5 class="card-title">Delivery list</h5>
+              <h5 class="card-title">Today delivery list</h5>
           
                 <table id="example" class="table table-hover">
                   <thead>
@@ -57,5 +57,5 @@
 {% block script %}
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-<script type="module" src="../../static/js/delivery/delivery_list2.js?{{ cache_id }}"></script>
+<script type="module" src="../../static/js/delivery/delivery_list1.js?{{ cache_id }}"></script>
 {% endblock %}
