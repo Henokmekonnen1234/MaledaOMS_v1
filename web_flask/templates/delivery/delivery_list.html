@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}
+    Delivery list
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../../static/css/image.css?{{ cache_id }}"/> 
+{% endblock %}
+
+{% block content %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Data Tables</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Home</a></li>
+          <li class="breadcrumb-item">Delivery</li>
+          <li class="breadcrumb-item active">Lists</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card overflow-auto">
+              
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h5 class="card-title">Table with hoverable rows
+                  
+                  </h5>
+                </div>
+                <div class="col-lg-6 d-flex justify-content-end">
+                  <div class="filter ">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <li class="dropdown-header text-start">
+                        <h6>Filter</h6>
+                      </li>
+          
+                      <li><a class="dropdown-item filter-option" href="#" data-filter="today">Today</a></li>
+                      <li><a class="dropdown-item filter-option" href="#" data-filter="month">This Month</a></li>
+                      <li><a class="dropdown-item filter-option" href="#" data-filter="year">This Year</a></li>
+                    </ul>
+                  </div>
+                </div>
+          
+              </div>
+          
+                <table id="example" class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Customer name</th>
+                      <th scope="col">Delivery status</th>
+                      <th scope="col">Delivery address</th>
+                      <th scope="col">Delivery date</th>
+                      <th scope="col">Update</th>
+                    </tr>
+                  </thead>
+                  <tbody id="delivery-list">
+                    <tr>
+                      <td>Somebarand creame</td>
+                      <td>Delivered</td>
+                      <td>Ayat</td>
+                      <td>5/29/2024, 8:58:07 PM</td>
+                      <td><a href="#" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                <br/>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{% endblock %}
+{% block script %}
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script type="module" src="../../static/js/delivery/delivery_list1.js?{{ cache_id }}"></script>
+{% endblock %}

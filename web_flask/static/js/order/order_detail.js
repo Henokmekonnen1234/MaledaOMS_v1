@@ -12,12 +12,18 @@ $(function() {
         const order_prod = response.order_prod
         const order_proces = response.order_proces
         const delivery = response.delivery
-        $(".order_date").text(formatDate(order.order_date))
+        if (order.order_date) {
+            $(".order_date").text(formatDate(order.order_date))
+        }
+        
         $(".process_date").text(formatDate(order_proces.process_date))
         $(".txn_no").text(order.txn_no)
         $(".status").text(order.status)
         $(".total_amt").text(order.total_amnt)
         $(".order_process").text(order_proces.process_status)
+        $(".delivery_status").text(delivery.delivery_status)
+        $(".delivery_date").text(formatDate(delivery.delivery_date))
+        $(".location").text(delivery.location)
         ajax_request(apiUrl + `customer/${order.cus_id}`, "GET", getLS("company"))
         .then(response1 => {
             $(".customer").text(response1.full_name)             

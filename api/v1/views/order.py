@@ -3,6 +3,7 @@
 from api.v1.views import app_views
 from api.v1.views.utility import not_found, error_data
 from api.v1.views.utility import generate_transaction_number
+from datetime import datetime, timezone
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import storage
@@ -142,30 +143,29 @@ def update_order_id(id: str):
 
         order_prod = json.loads(update_order.pop("prod_value"))
 
-        # Update OrderProcess if process_status is provided
         if "process_status" in update_order:
             process = storage.filter(OrderProcess, "order_id", order.id)
             if process:
                 setattr(process, "process_status", update_order.pop("process_status"))
+                setattr(process, "process_date", datetime.now(timezone.utc))
                 process.save()
 
-        # Update the order fields
         for key, value in update_order.items():
             setattr(order, key, value)
         order.save()
 
         order.total_amnt = 0
-        # Handle order products
         order_prod_dict = {key: value for key, value in order_prod.items()}
         existing_order_products = storage.filter_all(OrderItem, "order_id", id)
 
-        # Delete order products not in the updated list
         for product in existing_order_products:
             if product.prod_id not in order_prod_dict:
+                inventory = storage.get(Inventory, product.prod_id)
+                inventory.quantity += product.quantity
+                inventory.save()
                 storage.delete(product)
                 storage.save()
 
-        # Update existing order products and handle inventory
         for product in existing_order_products:
             if product.prod_id in order_prod_dict:
                 inventory = storage.get(Inventory, product.prod_id)
@@ -180,7 +180,6 @@ def update_order_id(id: str):
                 order.save()
                 order_prod_dict.pop(product.prod_id)
 
-        # Add new order products
         for prod_id, quantity in order_prod_dict.items():
             order_item_data = {"order_id": order.id, "prod_id": prod_id, "quantity": int(quantity)}
             new_order_item = OrderItem(**order_item_data)
@@ -197,4 +196,3 @@ def update_order_id(id: str):
     except Exception as e:
         print(e)
         return jsonify(error_data), 505
-

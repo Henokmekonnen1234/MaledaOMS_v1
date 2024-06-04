@@ -97,6 +97,18 @@ def customer_update():
     return render_template("./customer/customer_profile.html", cache_id= uuid4())
 
 
+@app.route("/list/delivery")
+def delivery_list():
+    """This will fetch the profile page"""
+    return render_template("./delivery/delivery_list.html", cache_id= uuid4())
+
+
+@app.route("/update/delivery")
+def update_delivery():
+    """This will fetch the profile page"""
+    return render_template("./delivery/update_delivery.html", cache_id= uuid4())
+
+
 if __name__ == "__main__":
     host = environ.get("API_HOST1")
     port = environ.get("API_PORT1")
