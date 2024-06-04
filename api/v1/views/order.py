@@ -28,13 +28,15 @@ def create_order():
         if not order_data:
             return jsonify(not_found), 404
         delivery_date = order_data.pop("delivery_date")
+        location = order_data.get("address")
         if not order_data.get("cus_id"):
             cust_keys = ["full_name", "telegram", "phone_no", "city", "address"]
             cust_data = {key: order_data.pop(key) for key in cust_keys}
             cust_data["company_id"] = comp_id
             customer = Customer(**cust_data)
             customer.save()
-
+        else:
+            order_data.pop("address")
         prod_value = json.loads(order_data.pop("prod_value"))
         order_data["cus_id"] = customer.id
         order_data["txn_no"] = generate_transaction_number()
@@ -61,7 +63,7 @@ def create_order():
             order_items.append(order_item.to_dict())
 
         order_process = OrderProcess(order_id=order.id)
-        delivery = Delivery(order_id=order.id, location=cust_data["address"],
+        delivery = Delivery(order_id=order.id, location=location,
                             delivery_date=delivery_date)
         order_process.save()
         delivery.save()
