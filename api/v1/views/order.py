@@ -35,11 +35,10 @@ def create_order():
             cust_data["company_id"] = comp_id
             customer = Customer(**cust_data)
             customer.save()
+            order_data["cus_id"] = customer.id
         else:
-            
             order_data.pop("address")
         prod_value = json.loads(order_data.pop("prod_value"))
-        order_data["cus_id"] = customer.id
         order_data["txn_no"] = generate_transaction_number()
         order_data["company_id"] = comp_id
         order_data["total_amnt"] = 0.0
@@ -52,7 +51,6 @@ def create_order():
             inventory.quantity -= quantity
             inventory.save()
 
-        location = order_data.pop("address")
         order = Order(**order_data)
         order.save()
 

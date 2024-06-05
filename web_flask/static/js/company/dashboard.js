@@ -13,8 +13,13 @@ $(function() {
         ajax_request(apiUrl + `customer`, "GET", getLS("company")),
         ajax_request(apiUrl + "orderitem", "GET", getLS("company")),
         ajax_request(apiUrl + "inventory", "GET", getLS("company"))
-    ).then((orders, customers, orderitems, products) => {
-        
+    ).then((orderResponse, customers, orderitems, products) => {
+        let currentDate = new Date()
+        let orders = orderResponse.filter(order => {
+            const order_data = new Date(order.order_date)
+            return currentDate.getMonth() === order_data.getMonth()
+             })
+
         orders.forEach(order =>{
             orderitems.forEach(orderitem => {
                 if (order.id === orderitem.order_id) {
@@ -32,18 +37,16 @@ $(function() {
                     
         })
     
-
-        $('#example').DataTable({
-                destroy: true, // Destroy existing DataTable before creating a new one
-                paging: true,
-                searchable: true,
-                buttons: [
-                    'csv', 'excel', 'pdf', 'print'
-                ],
-                responsive: true
-            });
+        data_table.DataTable({
+            destroy: true, 
+            paging: true,
+            searching: true,
+            lengthMenu: [[10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            responsive: true
+        });
 
     })
+    .catch(error => console.error(error))
 
     
 })
