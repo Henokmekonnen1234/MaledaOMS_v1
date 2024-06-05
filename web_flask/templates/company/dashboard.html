@@ -151,7 +151,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Recent Sales <span>| Today</span></h5>
 
-                  <table class="table table-borderless datatable">
+                  <table id="example" class="table table-borderless datatable">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -371,5 +371,5 @@
 {% endblock %}
 
 {% block script %}
-<script type="module" src="../../static/js/company/company_data.js"></script>
+<script type="module" src="../../static/js/company/dashboard.js?{{ cache_id }}"></script>
 {% endblock %}
