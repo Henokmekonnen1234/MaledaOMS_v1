@@ -9,7 +9,8 @@ $(function() {
     let data_table = $("#example")
     let revSum = 0;
     let custSum = 0;
-    let productCounts = {};
+    let productCounts = {}; // Object to store product counts
+
     data_table.find("tbody").empty()
     $.when(
         ajax_request(apiUrl + `order`, "GET", getLS("company")),
@@ -21,10 +22,10 @@ $(function() {
         let orders = orderResponse.filter(order => {
             const order_data = new Date(order.order_date)
             return currentDate.getMonth() === order_data.getMonth()
-             })
-             $(".sales_value").text(orders.length)
+        })
+        $(".sales_value").text(orders.length)
              
-        orders.forEach(order =>{
+        orders.forEach(order => {
             orderitems.forEach(orderitem => {
                 if (order.id === orderitem.order_id) {
                     let customer = customers.find(cust_data => cust_data.id === order.cus_id)
@@ -37,16 +38,12 @@ $(function() {
                     row.append($("<td>").text(order.status))
                     data_table.find("tbody").append(row)
 
-                    if (productCounts[product.product]) {
-                        productCounts[product.product] += 1;
-                    } else {
-                        productCounts[product.product] = 1;
-                    }
-
                 }
             })
             revSum += order.total_amnt     
         })
+
+        
         customers.forEach(value => custSum++)
         $(".revenue_value").text(orders.length)
         $(".customer").text(custSum)
@@ -55,10 +52,11 @@ $(function() {
             destroy: true, 
             paging: true,
             searching: true,
-            lengthMenu: [[10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             responsive: true
         });
 
+        // Convert productCounts object to array format for the chart
         let chartData = Object.keys(productCounts).map(key => {
             return {
                 value: productCounts[key],
@@ -66,59 +64,37 @@ $(function() {
             };
         });
 
+        // Update the chart with the new data
+        echarts.init(document.querySelector("#trafficChart")).setOption({
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                top: '5%',
+                left: 'center'
+            },
+            series: [{
+                name: 'Product Orders',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '18',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: chartData
+            }]
+        });
     })
     .catch(error => console.error(error))
-    
-    echarts.init(document.querySelector("#trafficChart")).setOption({
-        tooltip: {
-          trigger: 'item'
-        },
-        legend: {
-          top: '5%',
-          left: 'center'
-        },
-        series: [{
-          name: 'Access From',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: '18',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: chartData
-        }]
-      });
-
-})
-
-// {
-//     value: 1048,
-//     name: 'Search Engine'
-//   },
-//   {
-//     value: 735,
-//     name: 'Direct'
-//   },
-//   {
-//     value: 580,
-//     name: 'Email'
-//   },
-//   {
-//     value: 484,
-//     name: 'Union Ads'
-//   },
-//   {
-//     value: 300,
-//     name: 'Video Ads'
-//   }
+});

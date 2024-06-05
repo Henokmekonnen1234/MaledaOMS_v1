@@ -12,7 +12,7 @@ $(function() {
             tbody.empty()
             response.forEach(value => {
                 let tr = $("<tr>")
-                tr.append($("<td>").append($("<img>").addClass("table-img")
+                tr.append($("<th>").attr("scope", "row").append($("<img>").addClass("table-img")
                                     .attr("src", `../../static/img/upload/${value.image}`)))
                 tr.append($("<td>").text(value.product))
                 tr.append($("<td>").text(value.quantity))
