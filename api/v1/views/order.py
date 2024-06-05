@@ -36,6 +36,7 @@ def create_order():
             customer = Customer(**cust_data)
             customer.save()
         else:
+            
             order_data.pop("address")
         prod_value = json.loads(order_data.pop("prod_value"))
         order_data["cus_id"] = customer.id
