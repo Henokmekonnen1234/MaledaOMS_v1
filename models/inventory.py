@@ -3,8 +3,10 @@
 This module will connect Inventory class with database
 """
 
+from datetime import date
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
+from sqlalchemy import DATE
 
 
 class Inventory(BaseModel, Base):
@@ -23,6 +25,7 @@ class Inventory(BaseModel, Base):
     quantity = Column(Integer, nullable=False)
     price = Column(Float, default=0.0, nullable=False)
     status = Column(String(30), default="On hand", nullable=True)
+    expired_date = Column(DATE, default=date,nullable=True)
     company_id = Column(String(60), ForeignKey("company.id"),
                      nullable=False)
 

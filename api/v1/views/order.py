@@ -106,6 +106,7 @@ def get_order_id(id: str = ""):
         else:
             return jsonify(not_found), 404
     except Exception as e:
+        print(e)
         return jsonify(error_data), 505
 
 
@@ -124,6 +125,7 @@ def get_order():
         else:
             return jsonify(not_found), 404
     except Exception as e:
+        print(e)
         return jsonify(error_data), 505
 
 

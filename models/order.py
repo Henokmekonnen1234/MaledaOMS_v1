@@ -28,6 +28,7 @@ class Order(BaseModel, Base):
                        nullable=False)
     total_amnt = Column(Float, default=0.0, nullable=False)
     status = Column(String(100), default="Processing", nullable=False)
+    pre_paid = Column(Float, default=0.0, nullable=True)
     delivery = relationship("Delivery", backref="order",
                             cascade="all, delete, delete-orphan")
     company_id = Column(String(60), ForeignKey("company.id"),
