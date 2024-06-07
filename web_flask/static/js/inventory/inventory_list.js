@@ -3,6 +3,7 @@
 import { ajax_request } from "../requests.js"
 import { apiUrl, webUrl } from "../constants.js"
 import { getLS, saveLS, deleteLS } from "../cookies.js"
+import { formatDate } from "../date_format.js"
 
 $(function() {
         ajax_request(apiUrl + "inventory", "GET", getLS("company"),
@@ -18,6 +19,8 @@ $(function() {
                 tr.append($("<td>").text(value.quantity))
                 tr.append($("<td>").text(`${value.price} BR`))
                 tr.append($("<td>").text(value.catagory))
+                tr.append($("<td>").text(value.status))
+                tr.append($("<td>").text(formatDate(value.expired_date)))
                 tr.append($("<td>").append($("<a>")
                     .addClass("product_updt")
                     .addClass("btn btn-primary btn-sm")

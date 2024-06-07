@@ -109,11 +109,11 @@ $(function() {
             
         });
 
-        
+        formData.append("pre_paid", $("#pre_paid").val());    
         formData.append("address", address)
         formData.append("delivery_date", $("#delivery_date").val())
         formData.append("prod_value", JSON.stringify(prod_value));
-        
+    
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);            
         }

@@ -7,9 +7,9 @@ import random
 import string
 
 
-not_found = {"error": "not_found"}
-error_data = {"error": "data not found"}
-internal_error = {"error": "Internal Error"}
+not_found = {"error": "Data not_found"}
+athuntication = {"error": "Log in again please"}
+internal_error = {"error": "Internal Error occured"}
 
 UPLOAD_FOLDER = "/home/drogo/MaledaOMS_v1/web_flask/static/img/upload"
 

@@ -24,8 +24,10 @@ def add_product():
                 invent_data['image'] = save_file(request.files['image'])
             inventory = Inventory(**invent_data)
             inventory.save()
-            print(inventory)
-            return jsonify(inventory.to_dict())
+            if inventory:
+                return jsonify(inventory.to_dict())
+            else:
+                return jsonify(not_found), 404    
         else:
             return jsonify(not_found), 404
     except Exception as e:

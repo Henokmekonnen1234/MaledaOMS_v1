@@ -42,15 +42,17 @@ def create_order():
         order_data["txn_no"] = generate_transaction_number()
         order_data["company_id"] = comp_id
         order_data["total_amnt"] = 0.0
-
+        all_price = 0.0
         for key, value in prod_value.items():
             inventory = storage.get(Inventory, key)
             quantity = int(value)
             prod_value[key] = quantity
             order_data["total_amnt"] += inventory.price * quantity
             inventory.quantity -= quantity
+            all_price += inventory.price
             inventory.save()
-
+        
+        order_data["pre_paid"] = float(order_data["pre_paid"])
         order = Order(**order_data)
         order.save()
 
@@ -60,8 +62,12 @@ def create_order():
             order_item = OrderItem(**order_item_data)
             order_item.save()
             order_items.append(order_item.to_dict())
-
-        order_process = OrderProcess(order_id=order.id)
+        
+        advance_payment = (order.pre_paid * 100) / order.total_amnt
+        order_process = OrderProcess(order_id=order.id,
+                                     process_status=
+                                     "{:.0f}% paid"
+                                     .format(advance_payment))
         delivery = Delivery(order_id=order.id, location=location,
                             delivery_date=delivery_date)
         order_process.save()
