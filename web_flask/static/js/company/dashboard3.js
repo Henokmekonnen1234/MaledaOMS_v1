@@ -10,7 +10,8 @@ $(function() {
     let data_table2 = $("#example1");
     let revSum = 0;
     let custSum = 0;
-    let productCounts = {}; // Object to store product counts
+    let productCounts = {};
+    let customerRate = {}; // Object to store product counts
 
     // Initialize the ApexCharts chart container
     const chartDom = document.querySelector("#trafficChart");
@@ -22,6 +23,14 @@ $(function() {
         ajax_request(apiUrl + "orderitem", "GET", getLS("company")),
         ajax_request(apiUrl + "inventory", "GET", getLS("company"))
     ).then((orderResponse, customers, orderitems, products) => {
+        orderResponse.forEach(order => {
+            if (customerRate[order.cus_id]){
+                customerRate[order.cus_id] = +1
+            } else {
+                customerRate[order.cus_id] = 1
+            }
+        })
+        console.log(`customer ${customerRate}`)
         let currentDate = new Date()
         let orders = orderResponse.filter(order => {
             const order_data = new Date(order.order_date)
@@ -102,8 +111,10 @@ $(function() {
         // Convert productCounts object to arrays for the chart
         let chartLabels = Object.keys(productCounts);
         let chartData = Object.values(productCounts);
-        console.log(chartLabels)
-        console.log(chartData)
+        let chartLabels1 = Object.keys(customerRate);
+        let chartData2 = Object.values(customerRate);
+        console.log(chartLabels1)
+        console.log(chartData2)
         // Initialize and render the ApexCharts pie chart
         var options = {
             series: chartData,
