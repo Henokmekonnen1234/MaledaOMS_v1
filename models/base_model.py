@@ -69,8 +69,8 @@ class BaseModel:
                                             .strftime(time)
         if to_dict.get("_sa_instance_state"):
             del to_dict["_sa_instance_state"]
-        #if "password" in to_dict:
-            #del to_dict["password"]
+        if "password" in to_dict:
+            del to_dict["password"]
         return to_dict
 
     def __str__(self):
